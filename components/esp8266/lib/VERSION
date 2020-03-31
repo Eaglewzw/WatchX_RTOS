@@ -1,0 +1,11 @@
+gwen:
+    core:       71005fb
+    net80211:   484628a
+    pp:         b7f598d
+    wpa:        e1fe83a
+    espnow:     e1fe83a
+    wps:        e1fe83a
+    wpa2:       e1fe83a
+
+    smartconfig:  2.8.2
+    phy:          1155.0

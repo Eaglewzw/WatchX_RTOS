@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "H:\\Espressif\\msys32\\opt\\xtensa-lx106-elf",
+                "H:\\Espressif\\msys32\\opt\\xtensa-lx106-elf\\lib\\gcc\\xtensa-lx106-elf\\5.2.0\\include",
+                "H:\\Espressif\\msys32\\home\\Administrator\\IOT_Watch\\components\\IIC_OLED\\include",
+                "${workspaceFolder}/components/newlib/newlib/include",
+                "${workspaceFolder}/components/esp8266/include",
+                "${workspaceFolder}/components/esp_common/include",
+                "${workspaceFolder}/components/nvs_flash/test_nvs_host",
+                "${workspaceFolder}/components/freertos/include",
+                "${workspaceFolder}/components/freertos/include/freertos/private",
+                "${workspaceFolder}/components/freertos/port/esp8266/include/freertos",
+                "${workspaceFolder}/components/log/include",
+                "${workspaceFolder}/components/freertos/port/esp8266/include",
+                "${workspaceFolder}/components/heap/include",
+                "${workspaceFolder}/components/heap/port/esp8266/include",
+                "${workspaceFolder}/components",
+                "${workspaceFolder}/components/Key/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}

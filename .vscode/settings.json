@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "esp_system.h": "c",
+        "oled_i2c.h": "c",
+        "gpio.h": "c",
+        "queue.h": "c",
+        "esp_task_wdt.h": "c"
+    }
+}
