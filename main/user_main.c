@@ -19,7 +19,7 @@ void hw_timer_callback(void *arg);
 
 void app_main(void)
 {
-    int KeyCode=0;
+    int KeyCode=0,i=0;
 
     hw_timer_init(hw_timer_callback, NULL);
    
@@ -44,9 +44,11 @@ void app_main(void)
 
     for(;;) 
     {
-        /*KeyCode = Key_Fifo_Get();
+        KeyCode = Key_Fifo_Get();
+        OLED_DrawProgressBar(10, 10, 100, 10, 50);
         ESP_LOGI(TAG,"KeyCode:%d \n",KeyCode);
         printf("This is MAIN Task! \n");
+        gpio_set_level(GPIO_NUM_16, 0);
         vTaskDelay(500/portTICK_RATE_MS);//释放CPU资源
         gpio_set_level(GPIO_NUM_16, 1);
         vTaskDelay(500/portTICK_RATE_MS);//释放CPU资源*/
@@ -58,9 +60,16 @@ void app_main(void)
 
 void hw_timer_callback(void *arg)
 {
-    static int state = 0;
+    static int cnt = 0;
+    cnt++;
     //每隔10ms进行一次按键扫描，并将按键情况写入FIFO
     Key_Scan();
+    if(cnt == 10)
+    {
+        OLED_Refresh_Gram();
+        cnt = 0;
+    }
+
 }
 
 

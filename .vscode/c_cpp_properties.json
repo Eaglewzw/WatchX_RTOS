@@ -5,7 +5,7 @@
             "includePath": [
                 "H:\\Espressif\\msys32\\opt\\xtensa-lx106-elf",
                 "H:\\Espressif\\msys32\\opt\\xtensa-lx106-elf\\lib\\gcc\\xtensa-lx106-elf\\5.2.0\\include",
-                "H:\\Espressif\\msys32\\home\\Administrator\\IOT_Watch\\components\\IIC_OLED\\include",
+                "H:\\Espressif\\msys32\\home\\Administrator\\WatchX_RTOS\\components\\IIC_OLED\\include",
                 "${workspaceFolder}/components/newlib/newlib/include",
                 "${workspaceFolder}/components/esp8266/include",
                 "${workspaceFolder}/components/esp_common/include",

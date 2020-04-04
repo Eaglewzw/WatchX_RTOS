@@ -1,6 +1,6 @@
 /* Automatically generated file; DO NOT EDIT */
 /* Espressif IoT Development Framework Linker Script */
-/* Generated from: H:/Espressif/msys32/home/Administrator/IOT_Watch/components/esp8266/ld/esp8266.project.ld.in */
+/* Generated from: H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/ld/esp8266.project.ld.in */
 
 /*  Default entry point:  */
 ENTRY(call_start_cpu);

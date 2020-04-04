@@ -1,6 +1,6 @@
 bootloader_start.o: \
- H:/Espressif/msys32/home/Administrator/IOT_Watch/components/bootloader/subproject/main/bootloader_start.c \
- h:\espressif\msys32\home\administrator\iot_watch\build\include\sdkconfig.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader/subproject/main/bootloader_start.c \
+ h:\espressif\msys32\home\administrator\watchx_rtos\build\include\sdkconfig.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_config.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include/esp_flash_data_types.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_init.h \
@@ -18,7 +18,7 @@ bootloader_start.o: \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/log/include/esp_log_internal.h
 
-h:\espressif\msys32\home\administrator\iot_watch\build\include\sdkconfig.h:
+h:\espressif\msys32\home\administrator\watchx_rtos\build\include\sdkconfig.h:
 
 H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_config.h:
 
@@ -51,4 +51,4 @@ H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/inclu
 H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h:
 
 H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/log/include/esp_log_internal.h:
-/home/Administrator/IOT_Watch/components/bootloader/subproject/main/./bootloader_start.c:
+/home/Administrator/WatchX_RTOS/components/bootloader/subproject/main/./bootloader_start.c:

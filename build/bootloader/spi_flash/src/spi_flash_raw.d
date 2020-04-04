@@ -5,7 +5,7 @@ src/spi_flash_raw.o: \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/spi_flash/include/priv/esp_spi_flash_raw.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/rom_functions.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
- h:\espressif\msys32\home\administrator\iot_watch\build\include\sdkconfig.h \
+ h:\espressif\msys32\home\administrator\watchx_rtos\build\include\sdkconfig.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/pin_mux_register.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h \
@@ -21,7 +21,7 @@ H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/inclu
 
 H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/esp8266/eagle_soc.h:
 
-h:\espressif\msys32\home\administrator\iot_watch\build\include\sdkconfig.h:
+h:\espressif\msys32\home\administrator\watchx_rtos\build\include\sdkconfig.h:
 
 H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp8266/include/driver/soc.h:
 

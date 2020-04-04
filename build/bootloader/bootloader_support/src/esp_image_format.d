@@ -1,6 +1,6 @@
 src/esp_image_format.o: \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/src/esp_image_format.c \
- h:\espressif\msys32\home\administrator\iot_watch\build\include\sdkconfig.h \
+ h:\espressif\msys32\home\administrator\watchx_rtos\build\include\sdkconfig.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include/esp_image_format.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/esp_common/include/esp_err.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include/esp_flash_partitions.h \
@@ -17,7 +17,7 @@ src/esp_image_format.o: \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_random.h \
  H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include_priv/bootloader_sha.h
 
-h:\espressif\msys32\home\administrator\iot_watch\build\include\sdkconfig.h:
+h:\espressif\msys32\home\administrator\watchx_rtos\build\include\sdkconfig.h:
 
 H:/Espressif/msys32/home/Administrator/ESP8266_RTOS_SDK/components/bootloader_support/include/esp_image_format.h:
 

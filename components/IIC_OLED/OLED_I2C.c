@@ -1,15 +1,12 @@
 #include "OLED_I2C.h"
 #include "OLEDFONT.h"
-#include "stdio.h"
+#include "stdlib.h"
 #include "math.h"
 
 
-//定义图片缓冲区
-uint8_t OLED_GRAM[128][8];
-
+ static uint8_t OLED_GRAM[128][8];	
 void IIC_Start()
 {
-
 	OLED_SCLK_Set() ;
 	OLED_SDIN_Set();
 	OLED_SDIN_Clr();
@@ -22,12 +19,10 @@ void IIC_Stop()
 	OLED_SCLK_Set() ;
 	OLED_SDIN_Clr();
 	OLED_SDIN_Set();
-	
 }
 
 void IIC_Wait_Ack()
 {
-
 	OLED_SCLK_Set() ;
 	OLED_SCLK_Clr();
 }
@@ -49,7 +44,7 @@ void Write_IIC_Byte(uint8_t IIC_Byte)
 			da=da<<1;
 		OLED_SCLK_Set();
 		OLED_SCLK_Clr();
-		}
+	}
 
 
 }
@@ -98,33 +93,47 @@ void OLED_WR_Byte(uint8_t dat,uint8_t cmd)
 
 
 /**********************************************************
- *                        OLED顶层函数
- * 
- * 
- * 
- * 
- * 
- * 
+ *                        OLED顶层函数                    *
  ********************************************************** 
  */
 
-//开启OLED显示    
+
+/**
+  * @brief	: 开启OLED显示   
+  * @note	: 无  
+  * @param 	: 无
+  * @retval	: 无
+  */
 void OLED_Display_On(void)
 {
 	OLED_WR_Byte(0X8D,OLED_CMD);  //SET DCDC命令
 	OLED_WR_Byte(0X14,OLED_CMD);  //DCDC ON
 	OLED_WR_Byte(0XAF,OLED_CMD);  //DISPLAY ON
 }
-//关闭OLED显示     
+
+
+/**
+  * @brief	: 关闭OLED显示   
+  * @note	: 无  
+  * @param 	: 无
+  * @retval	: 无
+  */  
 void OLED_Display_Off(void)
 {
 	OLED_WR_Byte(0X8D,OLED_CMD);  //SET DCDC命令
 	OLED_WR_Byte(0X10,OLED_CMD);  //DCDC OFF
 	OLED_WR_Byte(0XAE,OLED_CMD);  //DISPLAY OFF
-}		
+}	
 
 
-//更新显存到LCD		 
+
+
+/**
+  * @brief	: 更新显存到LCD		 
+  * @note	: 无  
+  * @param 	: 无
+  * @retval	: 无
+  */  
 void OLED_Refresh_Gram(void)
 {
 	uint8_t i,n;		    
@@ -138,25 +147,34 @@ void OLED_Refresh_Gram(void)
 	}   
 }
 
-//清屏函数,清完屏,整个屏幕是黑色的!和没点亮一样!!!	  
+
+/**
+  * @brief	: 清屏，将数据全部填入零
+  * @note	: 无  
+  * @param 	: 无
+  * @retval	: 无
+  */  
 void OLED_Clear(void)  
-{  
-	uint8_t i,n;  
-	for(i=0;i<8;i++)for(n=0;n<128;n++)
-		OLED_GRAM[n][i]=0X00;  
+{  	    
+	uint8_t i,n;	
+	for(i=0;i<8;i++)
+		for(n=0;n<128;n++)
+			OLED_GRAM[n][i]=0X00;  
 	OLED_Refresh_Gram();//更新显示
 }
 
 
 
-//画点 
-//x:0~127
-//y:0~63
-//t:1 填充 0,清空				   
+/**
+  * @brief	: 画点 
+  * @note	: 无
+  * @param 	: x:0~127  y:0~63  t:1 填充 0,清空  
+  * @retval	: 无
+  */  
 void OLED_DrawPoint(uint8_t x,uint8_t y,uint8_t t)
 {
 	uint8_t pos,bx,temp=0;
-	if(x>127||y>63) return;//超出范围了.
+	if(x>127||y>63)return;//超出范围了.
 	pos=7-y/8;
 	bx=y%8;
 	temp=1<<(7-bx);
@@ -164,43 +182,270 @@ void OLED_DrawPoint(uint8_t x,uint8_t y,uint8_t t)
 	else OLED_GRAM[x][pos]&=~temp;	    
 }
 
-
 /**
-  * @brief	: 在指定位置显示一个字符,包括部分字符
-  * @note	: 无  
-  * @param 	: x:0~127  y:0~63 mode:0,反白显示;1,正常显示 size:选择字体 12/16/24
+  * @brief	: 画一条线段
+  * @note	: x的取值0-127,y的取值范围为0-64
+  * @param 	: x0,y0为起始坐标，x1,y1为终点坐标  
   * @retval	: 无
-  */
-void OLED_ShowChar(uint8_t x,uint8_t y,uint8_t chr,uint8_t size,uint8_t mode)
-{      			    
-	uint8_t temp,t,t1;
-	uint8_t y0=y;
-	uint8_t csize=(size/8+((size%8)?1:0))*(size/2);		//得到字体一个字符对应点阵集所占的字节数
-	chr=chr-' ';//得到偏移后的值		 
-    for(t=0;t<csize;t++)
-    {   
-		if(size==12)      temp=asc2_1206[chr][t]; 	//调用1206字体
-		else if(size==16) temp=asc2_1608[chr][t];	//调用1608字体
-		else if(size==24) temp=asc2_2412[chr][t];	//调用2412字体
-		else return;								//没有的字库
-        for(t1=0;t1<8;t1++)
-		{
-			if(temp&0x80)OLED_DrawPoint(x,y,mode);
-			else OLED_DrawPoint(x,y,!mode);
-			temp<<=1;
-			y++;
-			if((y-y0)==size)
-			{
-				y=y0;
-				x++;
-				break;
-			}
-		}  	 
-    }          
+  */  
+void OLED_DrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
+  int16_t steep = abs(y1 - y0) > abs(x1 - x0);
+  if (steep) {
+    _swap_int16_t(x0, y0);
+    _swap_int16_t(x1, y1);
+  }
+
+  if (x0 > x1) {
+    _swap_int16_t(x0, x1);
+    _swap_int16_t(y0, y1);
+  }
+
+  int16_t dx, dy;
+  dx = x1 - x0;
+  dy = abs(y1 - y0);
+
+  int16_t err = dx / 2;
+  int16_t ystep;
+
+  if (y0 < y1) {
+    ystep = 1;
+  } else {
+    ystep = -1;
+  }
+
+  for (; x0<=x1; x0++) {
+    if (steep) {
+      OLED_DrawPoint(y0, x0,White);
+    } else {
+      OLED_DrawPoint(x0, y0,White);
+    }
+    err -= dy;
+    if (err < 0) {
+      y0 += ystep;
+      err += dx;
+    }
+  }
 }
 
 
-//初始化SSD1306					    
+/**
+  * @brief	: 画一个水平线
+  * @note	: 无
+  * @param 	: x和y为起始坐标,length为长度
+  * @retval	: 无
+  */  
+void OLED_DrawHorizontalLine(int16_t x, int16_t y, int16_t length)
+{
+	int8_t i = 0;
+	if (y < 0 || y >= 128) { return; }
+
+	if (x < 0) 
+	{
+		length += x;
+		x = 0;
+	}
+
+	if ( (x + length) >128)
+	{
+		length = (128 - x);
+	}
+
+	if (length <= 0) { return; }
+	for (i = 0; i < length;i++)
+		OLED_DrawPoint(x+i, y, White);
+}
+
+
+/**
+  * @brief	: 画一个垂直线
+  * @note	: 无
+  * @param 	: x和y为起始坐标,length为长度
+  * @retval	: 无
+  */  	
+void OLED_DrawVerticalLine(int16_t x, int16_t y, int16_t length) 
+{
+	int8_t i = 0;
+	if (x < 0 || x >= 128) return;
+
+	if (y < 0) {
+		length += y;
+		y = 0;
+	}
+
+	if ( (y + length) > 64) {
+		length = (64 - y);
+	}
+
+	if (length <= 0) return;
+	for (i = 0; i < length;i++)
+		OLED_DrawPoint(x, y+i, White);
+}
+
+/**
+  * @brief	: 画一个非实心的矩形
+  * @note	: 无
+  * @param 	: x和y为起始坐标,width和height分别为宽度(0~127)和高度(0~64)  
+  * @retval	: 无
+  */  	
+void OLED_DrawRect(int16_t x, int16_t y, int16_t width, int16_t height) {
+	OLED_DrawHorizontalLine(x, y, width);
+	OLED_DrawVerticalLine(x, y, height);
+	OLED_DrawVerticalLine(x + width - 1, y, height);
+	OLED_DrawHorizontalLine(x, y + height - 1, width);
+}
+
+
+/**
+  * @brief	: 画一个实心的矩形
+  * @note	: 无
+  * @param 	: xMov和yMov为起始坐标,width和height分别为宽度(0~127)和高度(0~64)  
+  * @retval	: 无
+  */  	
+void OLED_FillRect(int16_t xMove, int16_t yMove, int16_t width, int16_t height) {
+	for (int16_t x = xMove; x < xMove + width; x++) {
+		OLED_DrawVerticalLine(x, yMove, height);
+	}
+}
+
+
+
+/**
+  * @brief	: 画一个圆
+  * @note	: 无
+  * @param 	: x和y为起始坐标,radius为半径 
+  * @retval	: 无
+  */  
+void OLED_DrawCircle(int16_t x0, int16_t y0, int16_t radius) {
+  	int16_t x = 0, y = radius;
+	int16_t dp = 1 - radius;
+	do {
+		if (dp < 0)
+			dp = dp + (x++) * 2 + 3;
+		else
+			dp = dp + (x++) * 2 - (y--) * 2 + 5;
+
+		OLED_DrawPoint(x0 + x, y0 + y,White);     //For the 8 octants
+		OLED_DrawPoint(x0 - x, y0 + y,White);
+		OLED_DrawPoint(x0 + x, y0 - y,White);
+		OLED_DrawPoint(x0 - x, y0 - y,White);
+		OLED_DrawPoint(x0 + y, y0 + x,White);
+		OLED_DrawPoint(x0 - y, y0 + x,White);
+		OLED_DrawPoint(x0 + y, y0 - x,White);
+		OLED_DrawPoint(x0 - y, y0 - x,White);
+
+	} while (x < y);
+
+  OLED_DrawPoint(x0 + radius, y0,White);
+  OLED_DrawPoint(x0, y0 + radius,White);
+  OLED_DrawPoint(x0 - radius, y0,White);
+  OLED_DrawPoint(x0, y0 - radius,White);
+}
+
+
+/**
+  * @brief	: 画一条1/4的圆弧线
+  * @note	: 无
+  * @param 	: x和y为起始坐标,radius为半径，quads:选择对于的情况，共八种
+  * @retval	: 无
+  */  
+void OLED_DrawCircleQuads(int16_t x0, int16_t y0, int16_t radius, uint8_t quads) {
+  int16_t x = 0, y = radius;
+  int16_t dp = 1 - radius;
+  while (x < y) {
+    if (dp < 0)
+      dp = dp + (x++) * 2 + 3;
+    else
+      dp = dp + (x++) * 2 - (y--) * 2 + 5;
+    if (quads & 0x1) {
+      OLED_DrawPoint(x0 + x, y0 - y,White);
+      OLED_DrawPoint(x0 + y, y0 - x,White);
+    }
+    if (quads & 0x2) {
+      OLED_DrawPoint(x0 - y, y0 - x,White);
+      OLED_DrawPoint(x0 - x, y0 - y,White);
+    }
+    if (quads & 0x4) {
+      OLED_DrawPoint(x0 - y, y0 + x,White);
+      OLED_DrawPoint(x0 - x, y0 + y,White);
+    }
+    if (quads & 0x8) {
+      OLED_DrawPoint(x0 + x, y0 + y,White);
+      OLED_DrawPoint(x0 + y, y0 + x,White);
+    }
+  }
+  if (quads & 0x1 && quads & 0x8) {
+    OLED_DrawPoint(x0 + radius, y0,White);
+  }
+  if (quads & 0x4 && quads & 0x8) {
+    OLED_DrawPoint(x0, y0 + radius,White);
+  }
+  if (quads & 0x2 && quads & 0x4) {
+    OLED_DrawPoint(x0 - radius, y0,White);
+  }
+  if (quads & 0x1 && quads & 0x2) {
+    OLED_DrawPoint(x0, y0 - radius,White);
+  }
+}
+
+/**
+  * @brief	: 画一个实心圆
+  * @note	: 无
+  * @param 	: x和y为起始坐标,radius为半径 
+  * @retval	: 无
+  */  
+void OLED_FillCircle(int16_t x0, int16_t y0, int16_t radius) {
+  int16_t x = 0, y = radius;
+	int16_t dp = 1 - radius;
+	do {
+		if (dp < 0)
+      dp = dp + (x++) * 2 + 3;
+    else
+      dp = dp + (x++) * 2 - (y--) * 2 + 5;
+
+    OLED_DrawHorizontalLine(x0 - x, y0 - y, 2*x);
+    OLED_DrawHorizontalLine(x0 - x, y0 + y, 2*x);
+    OLED_DrawHorizontalLine(x0 - y, y0 - x, 2*y);
+    OLED_DrawHorizontalLine(x0 - y, y0 + x, 2*y);
+
+
+	} while (x < y);
+  OLED_DrawHorizontalLine(x0 - radius, y0, 2 * radius);
+
+}
+
+/**
+  * @brief	: 画一个进度条
+  * @note	: 无
+  * @param 	: x和y为起始坐标,width和height分别为宽度(0~127)和高度(0~64), progress为进度占比
+  * @retval	: 无
+  */  
+void OLED_DrawProgressBar(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t progress) {
+  uint16_t radius = height / 2;
+  uint16_t xRadius = x + radius;
+  uint16_t yRadius = y + radius;
+  uint16_t doubleRadius = 2 * radius;
+  uint16_t innerRadius = radius - 2;
+
+  OLED_DrawCircleQuads(xRadius, yRadius, radius, 0b00000110);
+  OLED_DrawHorizontalLine(xRadius, y, width - doubleRadius + 1);
+  OLED_DrawHorizontalLine(xRadius, y + height, width - doubleRadius + 1);
+  OLED_DrawCircleQuads(x + width - radius, yRadius, radius, 0b00001001);
+
+  uint16_t maxProgressWidth = (width - doubleRadius + 1) * progress / 100;
+
+  OLED_FillCircle(xRadius, yRadius, innerRadius);
+  OLED_FillRect(xRadius + 1, y + 2, maxProgressWidth, height - 3);
+  OLED_FillCircle(xRadius + maxProgressWidth, yRadius, innerRadius);
+}
+
+
+
+/**
+  * @brief	: 初始化OLED 
+  * @note	: 无
+  * @param 	: 无  
+  * @retval	: 无
+  */  			    
 void OLED_Init(void)
 {
 
@@ -224,8 +469,8 @@ void OLED_Init(void)
 	OLED_WR_Byte(0x40,OLED_CMD);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
 	OLED_WR_Byte(0x81,OLED_CMD);//--set contrast control register
 	OLED_WR_Byte(0xCF,OLED_CMD); // Set SEG Output Current Brightness
-	OLED_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
-	OLED_WR_Byte(0xC8,OLED_CMD);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
+	OLED_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping      0xa0左右反置 0xa1正常
+	OLED_WR_Byte(0xC0,OLED_CMD);//--Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
 	OLED_WR_Byte(0xA6,OLED_CMD);//--set normal display
 	OLED_WR_Byte(0xA8,OLED_CMD);//--set multiplex ratio(1 to 64)
 	OLED_WR_Byte(0x3f,OLED_CMD);//--1/64 duty
@@ -246,7 +491,9 @@ void OLED_Init(void)
 	OLED_WR_Byte(0xA4,OLED_CMD);// Disable Entire Display On (0xa4/0xa5)
 	OLED_WR_Byte(0xA6,OLED_CMD);// Disable Inverse Display On (0xa6/a7) 
 	OLED_WR_Byte(0xAF,OLED_CMD);//--turn on oled panel
+
 	
-	OLED_WR_Byte(0xAF,OLED_CMD); /*display ON*/ 
+
 	OLED_Clear();
+	
 }  
