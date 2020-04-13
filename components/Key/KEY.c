@@ -1,3 +1,4 @@
+#include "driver/gpio.h"
 #include "KEY.h"
 
 static NewKey Button[KEY_COUNT];//定义四个按键

@@ -68,8 +68,9 @@ user_main.o: \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_idf_version.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_task_wdt.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/hw_timer.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLED_I2C.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KEY.h
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDDisplay.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KEY.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDImage.h
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdio.h:
 
@@ -207,7 +208,9 @@ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/es
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/hw_timer.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLED_I2C.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDDisplay.h:
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KEY.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDImage.h:
 /home/Administrator/WatchX_RTOS/main/./user_main.c:

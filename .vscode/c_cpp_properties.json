@@ -3,6 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\Administrator\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
+                "C:\\Users\\Administrator\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**",
                 "H:\\Espressif\\msys32\\opt\\xtensa-lx106-elf",
                 "H:\\Espressif\\msys32\\opt\\xtensa-lx106-elf\\lib\\gcc\\xtensa-lx106-elf\\5.2.0\\include",
                 "H:\\Espressif\\msys32\\home\\Administrator\\WatchX_RTOS\\components\\IIC_OLED\\include",
@@ -25,7 +27,8 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "intelliSenseMode": "msvc-x64"
+            "intelliSenseMode": "msvc-x64",
+            "forcedInclude": []
         }
     ],
     "version": 4

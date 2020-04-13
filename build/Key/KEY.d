@@ -1,6 +1,5 @@
 KEY.o: \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/KEY.c \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KEY.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/gpio.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdint.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_default_types.h \
@@ -29,9 +28,8 @@ KEY.o: \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/soc.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/pin_mux_register.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/gpio_register.h
-
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KEY.h:
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/gpio_register.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KEY.h
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/gpio.h:
 
@@ -90,4 +88,6 @@ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/es
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h:
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/gpio_register.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KEY.h:
 /home/Administrator/WatchX_RTOS/components/Key/./KEY.c:

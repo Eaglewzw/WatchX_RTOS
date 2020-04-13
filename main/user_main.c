@@ -9,8 +9,10 @@
 #include "esp_system.h"
 #include "esp_task_wdt.h"
 #include "driver/hw_timer.h"
-#include "OLED_I2C.h"
+#include "OLEDDisplay.h"
+
 #include "KEY.h"
+#include "OLEDImage.h"
 
 static const char *TAG = "Test";
 
@@ -19,8 +21,7 @@ void hw_timer_callback(void *arg);
 
 void app_main(void)
 {
-    int KeyCode=0,i=0;
-
+    uint8_t KeyCode=0;
     hw_timer_init(hw_timer_callback, NULL);
    
     hw_timer_alarm_us(10000, true);
@@ -45,7 +46,9 @@ void app_main(void)
     for(;;) 
     {
         KeyCode = Key_Fifo_Get();
-        OLED_DrawProgressBar(10, 10, 100, 10, 50);
+        //OLED_DrawXbm(20, 20, 16, 16, Image_Test);
+        //OLED_DrawCircle(20, 20, 20);
+        OLED_DrawString(0,0,"qwertuiop""fegrh46j576k4j5htj5hgasdfghjklzxcvbnm!@#$%^&*()_+{}|:");
         ESP_LOGI(TAG,"KeyCode:%d \n",KeyCode);
         printf("This is MAIN Task! \n");
         gpio_set_level(GPIO_NUM_16, 0);
@@ -58,19 +61,24 @@ void app_main(void)
 }
 
 
+
 void hw_timer_callback(void *arg)
 {
     static int cnt = 0;
     cnt++;
     //每隔10ms进行一次按键扫描，并将按键情况写入FIFO
     Key_Scan();
-    if(cnt == 10)
+    if(cnt == 100)
     {
         OLED_Refresh_Gram();
         cnt = 0;
     }
 
 }
+
+
+
+
 
 
 

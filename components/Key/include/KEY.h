@@ -1,8 +1,6 @@
 #ifndef _KEY_H
 #define _KEY_H
 
-#include "driver/gpio.h"
-
 
 #define SetKeyGpio                GPIO_NUM_13
 #define UpKeyGpio                 GPIO_NUM_12
