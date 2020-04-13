@@ -713,6 +713,70 @@ void OLED_DrawString(int16_t xMove, int16_t yMove, char *strUser)
 }
 
 
+void OLED_DrawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxLineWidth, char* strUser)
+{
+  uint16_t firstChar  = pgm_read_byte(fontData + FIRST_CHAR_POS);
+  uint16_t lineHeight = pgm_read_byte(fontData + HEIGHT_POS);
+  uint16_t k = 0;
+  uint16_t len = strlen(strUser) + 1;
+
+  // Copy the string into a char array
+  char* text = (char*) malloc(len * sizeof(char));
+  if(!text) {
+    printf("Can't allocate another char array! \n");
+  }
+  for (uint8_t i = 0; i < len;i++)
+    text[i] = *(strUser + i);
+  len--;
+
+  for (uint16_t i=0; i < len; i++) {
+    char c = DefaultFontTableLookup(text[i]);
+    if (c!=0) {
+      text[k++]=c;
+    }
+  }
+  text[k]=0;
+
+  uint16_t length = strlen(text);
+  uint16_t lastDrawnPos = 0;
+  uint16_t lineNumber = 0;
+  uint16_t strWidth = 0;
+
+  uint16_t preferredBreakpoint = 0;
+  uint16_t widthAtBreakpoint = 0;
+
+  for (uint16_t i = 0; i < length; i++) {
+    strWidth += pgm_read_byte(fontData + JUMPTABLE_START + (text[i] - firstChar) * JUMPTABLE_BYTES + JUMPTABLE_WIDTH);
+
+    // Always try to break on a space or dash
+    if (text[i] == ' ' || text[i]== '-') {
+      preferredBreakpoint = i;
+      widthAtBreakpoint = strWidth;
+    }
+
+    if (strWidth >= maxLineWidth) {
+      if (preferredBreakpoint == 0) {
+        preferredBreakpoint = i;
+        widthAtBreakpoint = strWidth;
+      }
+      drawStringInternal(xMove, yMove + (lineNumber++) * lineHeight , &text[lastDrawnPos], preferredBreakpoint - lastDrawnPos, widthAtBreakpoint);
+      lastDrawnPos = preferredBreakpoint + 1;
+      // It is possible that we did not draw all letters to i so we need
+      // to account for the width of the chars from `i - preferredBreakpoint`
+      // by calculating the width we did not draw yet.
+      strWidth = strWidth - widthAtBreakpoint;
+      preferredBreakpoint = 0;
+    }
+  }
+
+  // Draw last part if needed
+  if (lastDrawnPos < length) {
+    drawStringInternal(xMove, yMove + lineNumber * lineHeight , &text[lastDrawnPos], length - lastDrawnPos, getStringWidth(&text[lastDrawnPos], length - lastDrawnPos));
+  }
+
+  free(text);
+}
+
 
 
 

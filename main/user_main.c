@@ -48,7 +48,9 @@ void app_main(void)
         KeyCode = Key_Fifo_Get();
         //OLED_DrawXbm(20, 20, 16, 16, Image_Test);
         //OLED_DrawCircle(20, 20, 20);
-        OLED_DrawString(0,0,"qwertuiop""fegrh46j576k4j5htj5hgasdfghjklzxcvbnm!@#$%^&*()_+{}|:");
+        OLED_SetPixel(127, 63);
+        OLED_DrawStringMaxWidth(0,0,150,
+        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.");
         ESP_LOGI(TAG,"KeyCode:%d \n",KeyCode);
         printf("This is MAIN Task! \n");
         gpio_set_level(GPIO_NUM_16, 0);

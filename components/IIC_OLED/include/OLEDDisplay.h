@@ -69,6 +69,7 @@ void OLED_SetFont(const uint8_t *fontData);
 void OLED_SetTextAlignment(OLEDDISPLAY_TEXT_ALIGNMENT TextAlignment);
 void OLED_SetColor(OLEDDISPLAY_COLOR Color);
 void OLED_DrawString(int16_t xMove, int16_t yMove, char *strUser);
+void OLED_DrawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxLineWidth, char *strUser);
 void OLED_Init(void);
 
 
