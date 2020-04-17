@@ -486,37 +486,6 @@ char DefaultFontTableLookup(const uint8_t ch) {
 }
 
 
-
-
-// You need to free the char!
-char* utf8ascii(char* str) {
-  uint16_t k = 0;
-  uint16_t length = strlen(str) + 1;
-
-  // Copy the string into a char array
-  char* s = (char*) malloc(length * sizeof(char));
-  if(!s) {
-    printf("Can't allocate another char array. Drop support for UTF-8.\n");
-    return (char*) str;
-  }
-  for (uint8_t i = 0; i < length;i++)
-    s[i] = *(str + i);
-
-    length--;
-
-  for (uint16_t i=0; i < length; i++) {
-    char c = DefaultFontTableLookup(s[i]);
-    if (c!=0) {
-      s[k++]=c;
-    }
-  }
-
-  s[k]=0;
-
-  // This will leak 's' be sure to free it in the calling function.
-  return s;
-}
-
 void inline drawInternal(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *data, uint16_t offset, uint16_t bytesInData) 
 {
   if (width < 0 || height < 0) return;
@@ -658,13 +627,12 @@ void drawStringInternal(int16_t xMove, int16_t yMove, char* text, uint16_t textL
 
 
 
-
-
-
-
-
-
-
+/**
+  * @brief	: 在显示屏中显示一行字符串
+  * @note	  : 注意该函数不会换行
+  * @param 	: xMove和yMove为起始坐标, strUser为输入的字符串
+  * @retval	: 无
+  */  	
 void OLED_DrawString(int16_t xMove, int16_t yMove, char *strUser) 
 {
   uint16_t lineHeight = pgm_read_byte(fontData + HEIGHT_POS);
@@ -712,7 +680,12 @@ void OLED_DrawString(int16_t xMove, int16_t yMove, char *strUser)
 
 }
 
-
+/**
+  * @brief	: 在显示屏中显示字符串
+  * @note	  : 注意该函数可换行
+  * @param 	: xMove和yMove为起始坐标, maxLineWidth为字符串个数,strUser为输入的字符串
+  * @retval	: 无
+  */ 	
 void OLED_DrawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxLineWidth, char* strUser)
 {
   uint16_t firstChar  = pgm_read_byte(fontData + FIRST_CHAR_POS);

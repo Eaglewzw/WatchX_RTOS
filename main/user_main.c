@@ -10,8 +10,7 @@
 #include "esp_task_wdt.h"
 #include "driver/hw_timer.h"
 #include "OLEDDisplay.h"
-
-#include "KEY.h"
+#include "KeyFifo.h"
 #include "OLEDImage.h"
 
 static const char *TAG = "Test";
@@ -22,6 +21,7 @@ void hw_timer_callback(void *arg);
 void app_main(void)
 {
     uint8_t KeyCode=0;
+    char *buffer;
     hw_timer_init(hw_timer_callback, NULL);
    
     hw_timer_alarm_us(10000, true);
@@ -46,11 +46,10 @@ void app_main(void)
     for(;;) 
     {
         KeyCode = Key_Fifo_Get();
-        //OLED_DrawXbm(20, 20, 16, 16, Image_Test);
-        //OLED_DrawCircle(20, 20, 20);
-        OLED_SetPixel(127, 63);
-        OLED_DrawStringMaxWidth(0,0,150,
-        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.");
+        
+        OLED_DrawXbm(10, 10, 40, 40, Image_Test);
+        OLED_DrawXbm(20, 20, 40, 40, Image_Test1);
+
         ESP_LOGI(TAG,"KeyCode:%d \n",KeyCode);
         printf("This is MAIN Task! \n");
         gpio_set_level(GPIO_NUM_16, 0);

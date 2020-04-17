@@ -28,9 +28,9 @@
 #define MAX(a, b) (((a)>(b)) ? (a) : (b))
 
 typedef enum{
-  BLACK = 0,
-  WHITE = 1,
-  INVERSE = 2
+  BLACK = 0,       //字体黑色(不显示)
+  WHITE = 1,       //字体白色(显示)
+  INVERSE = 2      //闪烁效果
 }OLEDDISPLAY_COLOR;
 
 typedef enum{
@@ -39,12 +39,6 @@ typedef enum{
   TEXT_ALIGN_CENTER = 2,
   TEXT_ALIGN_CENTER_BOTH = 3
 }OLEDDISPLAY_TEXT_ALIGNMENT;
-
-/*typedef struct{
-  OLEDDISPLAY_TEXT_ALIGNMENT textAlignment; //字体对齐方式
-  OLEDDISPLAY_COLOR            color;       //颜色    
-  const uint8_t *fontData;                  //字体
-} oledString;*/
 
 
 /*-----------------OLED端口定义----------------*/  					   	    

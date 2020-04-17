@@ -1,17 +1,5 @@
-#ifndef _KEY_H
-#define _KEY_H
-
-
-#define SetKeyGpio                GPIO_NUM_13
-#define UpKeyGpio                 GPIO_NUM_12
-#define DownKeyGpio               GPIO_NUM_14
-#define BackKeyGpio               GPIO_NUM_0
-
-//按键电平获取
-#define  SetKeyLevel              gpio_get_level(SetKeyGpio) 
-#define  UpKeyLevel               gpio_get_level(UpKeyGpio) 
-#define  DownKeyLevel             gpio_get_level(DownKeyGpio) 
-#define  BackKeyLevel             gpio_get_level(BackKeyGpio) 
+#ifndef _KEYFIFI_H
+#define _KEYFIFO_H
 
 
 #define KEY_COUNT           4       // 按键个数  
@@ -85,7 +73,6 @@ typedef struct
 }KeyFifo;
 
 void Key_Init(void);
-void KeyGpio_Init(void);
 void Key_Fifo_Init(void);
 void Key_Fifo_Clear(void);
 uint8_t Key_Fifo_Get(void);
