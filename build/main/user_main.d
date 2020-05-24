@@ -58,6 +58,9 @@ user_main.o: \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/task.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/private/list.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/queue.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/event_groups.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/timers.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/task.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/gpio.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/pin_mux_register.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h \
@@ -68,9 +71,63 @@ user_main.o: \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_idf_version.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_task_wdt.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/hw_timer.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDDisplay.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KeyFifo.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDImage.h
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_wifi.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_wifi_types.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/queue.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_interface.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event_base.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/semphr.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/queue.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event_base.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event_legacy.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_wifi_types.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/tcpip_adapter/include/tcpip_adapter.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/ip_addr.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/opt.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/lwipopts.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/port/include/time.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/time.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/time.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/unistd.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/unistd.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/time.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/fcntl.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_default_fcntl.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/stat.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/vfs/include/sys/ioctl.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/port/include/sys/select.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_common/include/esp_task.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_libc.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/ets_sys.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/include/apps/sntp/sntp.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/netif/dhcp_state.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/debug.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/arch.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/arch/cc.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/errno.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/errno.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/arch/sys_arch.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/arch/vfs_lwip.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/inttypes.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/limits.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/ctype.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/def.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/ip4_addr.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/ip6_addr.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/def.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/include/apps/dhcpserver/dhcpserver.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/nvs_flash/include/nvs_flash.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/nvs_flash/include/nvs.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_smartconfig.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/smartconfig_ack/include/smartconfig_ack.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/err.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/sys.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/key/include/key_fifo.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_api.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_typedef.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_config.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/port/include/ssd1306_i2c.h
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdio.h:
 
@@ -188,6 +245,12 @@ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/f
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/queue.h:
 
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/event_groups.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/timers.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/task.h:
+
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/gpio.h:
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/pin_mux_register.h:
@@ -208,9 +271,117 @@ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/es
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/hw_timer.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDDisplay.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_wifi.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/Key/include/KeyFifo.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_wifi_types.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/IIC_OLED/include/OLEDImage.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/queue.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_interface.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event_base.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/semphr.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/freertos/include/freertos/queue.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event_base.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_event/include/esp_event_legacy.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_wifi_types.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/tcpip_adapter/include/tcpip_adapter.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/ip_addr.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/opt.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/lwipopts.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/port/include/time.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/time.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/time.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/unistd.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/unistd.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/time.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/fcntl.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_default_fcntl.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/stat.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/vfs/include/sys/ioctl.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/port/include/sys/select.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_common/include/esp_task.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_libc.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/ets_sys.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/include/apps/sntp/sntp.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/netif/dhcp_state.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/debug.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/arch.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/arch/cc.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/errno.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/errno.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/arch/sys_arch.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/port/esp8266/include/arch/vfs_lwip.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/inttypes.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/limits.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/ctype.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/def.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/ip4_addr.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/ip6_addr.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/def.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/include/apps/dhcpserver/dhcpserver.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/nvs_flash/include/nvs_flash.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/nvs_flash/include/nvs.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp_smartconfig.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/smartconfig_ack/include/smartconfig_ack.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/err.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/sys.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/key/include/key_fifo.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_api.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_typedef.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_config.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/port/include/ssd1306_i2c.h:
 /home/Administrator/WatchX_RTOS/main/./user_main.c:

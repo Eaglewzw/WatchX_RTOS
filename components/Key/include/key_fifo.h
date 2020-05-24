@@ -1,5 +1,6 @@
-#ifndef _KEYFIFI_H
-#define _KEYFIFO_H
+#ifndef KEY_FIFI_H
+#define KEY_FIFO_H
+
 
 
 #define KEY_COUNT           4       // 按键个数  
@@ -72,13 +73,13 @@ typedef struct
 
 }KeyFifo;
 
-void Key_Init(void);
-void Key_Fifo_Init(void);
-void Key_Fifo_Clear(void);
-uint8_t Key_Fifo_Get(void);
-uint8_t Key_GetState(Key_ID ucKeyID);
-void Ket_SetParam(uint8_t ucKeyID, uint16_t LongTime, uint8_t RepeatSpeed);
-void Key_Scan(void);
-void Key_Fifo_Put(uint8_t KeyCode);  
-void Key_Detect(uint8_t i);  
+void key_init(void);
+void key_fifo_init(void);
+void key_fifo_clear(void);
+uint8_t key_fifo_get(void);
+uint8_t key_get_state(Key_ID ucKeyID);
+void ket_set_param(uint8_t ucKeyID, uint16_t LongTime, uint8_t RepeatSpeed);
+void key_scan(void);
+void key_fifo_put(uint8_t KeyCode);  
+void key_detect(uint8_t i);  
 #endif

@@ -1,14 +1,12 @@
-#include "KeyGpio.h"
-
-
+#include "key_gpio.h"
 
 /**
   * @brief	: 初始化按键GPIO引脚
-  * @note	: 无  
+  * @note	  : 无  
   * @param 	: 无
   * @retval	: 无
   */
-void KeyGpio_Init()
+void key_gpio_init()
 {
     /*************************************
     *    set按键   ----->  GPIO13(下拉)  *

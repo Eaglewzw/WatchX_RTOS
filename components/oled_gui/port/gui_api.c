@@ -2,29 +2,28 @@
 #include "stdlib.h"
 #include "math.h"
 #include "string.h"
-#include "SSD1306I2C.h"
-#include "OLEDDisplayFonts.h"
-#include "OLEDDisplay.h"
+#include "ssd1306_i2c.h"
+#include "oled_fonts.h"
+#include "gui_api.h"
 
 
-uint8_t OLED_BUFFER[Width * Height / 8];  //OLED显示屏缓冲区
+uint8_t OLED_BUFFER[GUIXMAX *  GUIYMAX / 8];  //OLED显示屏缓冲区
 const uint8_t *fontData=ArialMT_Plain_10;  //字体   
-OLEDDISPLAY_COLOR   color=WHITE;       //颜色     
 OLEDDISPLAY_TEXT_ALIGNMENT textAlignment=TEXT_ALIGN_LEFT; //字体对齐方式
 
 
 
 /**
   * @brief	: 开启OLED显示   
-  * @note	: 无  
+  * @note	  : 无  
   * @param 	: 无
   * @retval	: 无
   */
-void OLED_Display_On(void)
+void gui_display_on(void)
 {
-	OLED_WR_Byte(0X8D,OLED_CMD);  //SET DCDC命令
-	OLED_WR_Byte(0X14,OLED_CMD);  //DCDC ON
-	OLED_WR_Byte(0XAF,OLED_CMD);  //DISPLAY ON
+	ssd1306_write_byte(0X8D,SSD1306_CMD);  //SET DCDC命令
+	ssd1306_write_byte(0X14,SSD1306_CMD);  //DCDC ON
+	ssd1306_write_byte(0XAF,SSD1306_CMD);  //DISPLAY ON
 }
 
 
@@ -34,11 +33,11 @@ void OLED_Display_On(void)
   * @param 	: 无
   * @retval	: 无
   */  
-void OLED_Display_Off(void)
+void gui_display_off(void)
 {
-	OLED_WR_Byte(0X8D,OLED_CMD);  //SET DCDC命令
-	OLED_WR_Byte(0X10,OLED_CMD);  //DCDC OFF
-	OLED_WR_Byte(0XAE,OLED_CMD);  //DISPLAY OFF
+	ssd1306_write_byte(0X8D,SSD1306_CMD);  //SET DCDC命令
+	ssd1306_write_byte(0X10,SSD1306_CMD);  //DCDC OFF
+	ssd1306_write_byte(0XAE,SSD1306_CMD);  //DISPLAY OFF
 }	
 
 
@@ -50,16 +49,16 @@ void OLED_Display_Off(void)
   * @param 	: 无
   * @retval	: 无
   */  
-void OLED_Refresh_Gram(void)
+void gui_refresh_gram(void)
 {
 	uint8_t i,n;		    
 	for(i=0;i<8;i++)  
 	{  
-		OLED_WR_Byte (0xb0+i,OLED_CMD);    //设置页地址（0~7）
-		OLED_WR_Byte (0x00,OLED_CMD);      //设置显示位置—列低地址
-		OLED_WR_Byte (0x10,OLED_CMD);      //设置显示位置—列高地址   
+		ssd1306_write_byte (0xb0+i,SSD1306_CMD);    //设置页地址（0~7）
+		ssd1306_write_byte (0x00,SSD1306_CMD);      //设置显示位置—列低地址
+		ssd1306_write_byte (0x10,SSD1306_CMD);      //设置显示位置—列高地址   
 		for(n=0;n<128;n++)
-      OLED_WR_Byte(OLED_BUFFER[n+i*128], OLED_DATA);
+      ssd1306_write_byte(OLED_BUFFER[n+i*128], SSD1306_DATA);
   }   
 }
 
@@ -70,10 +69,10 @@ void OLED_Refresh_Gram(void)
   * @param 	: 无
   * @retval	: 无
   */  
-void OLED_Clear(void)  
+void gui_clear_gram(void) 
 {  	    
   memset(OLED_BUFFER,0x00,sizeof(OLED_BUFFER)); 
-	OLED_Refresh_Gram();//更新显示
+	gui_refresh_gram();//更新显示
 }
 
 
@@ -84,15 +83,17 @@ void OLED_Clear(void)
   * @param 	: x:0~127  y:0~63  t:1 填充 0,清空  
   * @retval	: 无
   */  
-void OLED_SetPixel(uint8_t x,uint8_t y)
+void gui_set_pixel(uint8_t x, uint8_t y,GuiColor Color)
 {
-  if (x >= 0 && x < Width && y >= 0 && y < Height) {
-    switch (color) {
-      case WHITE:    OLED_BUFFER[x + (y / 8)* Width ] |=  (1 << (y & 7)); break;
-      case BLACK:    OLED_BUFFER[x + (y / 8)* Width ] &= ~(1 << (y & 7)); break;
-      case INVERSE:  OLED_BUFFER[x + (y / 8)* Width ] ^=  (1 << (y & 7)); break;
+  if (x >= 0 && x < GUIXMAX && y >= 0 && y <  GUIYMAX) 
+  {
+    switch (Color) {
+      case WHITE:    OLED_BUFFER[x + (y / 8)* GUIXMAX ] |=  (1 << (y & 7)); break;
+      case BLACK:    OLED_BUFFER[x + (y / 8)* GUIXMAX ] &= ~(1 << (y & 7)); break;
+      case INVERSE:  OLED_BUFFER[x + (y / 8)* GUIXMAX ] ^=  (1 << (y & 7)); break;
     }
-  }	    
+  }
+ 
 }
 
 /**
@@ -101,7 +102,8 @@ void OLED_SetPixel(uint8_t x,uint8_t y)
   * @param 	: x0,y0为起始坐标，x1,y1为终点坐标  
   * @retval	: 无
   */  
-void OLED_DrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
+void gui_draw_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1,GuiColor Color)
+ {
   int16_t steep = abs(y1 - y0) > abs(x1 - x0);
   if (steep) {
     _swap_int16_t(x0, y0);
@@ -128,9 +130,9 @@ void OLED_DrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
 
   for (; x0<=x1; x0++) {
     if (steep) {
-      OLED_SetPixel(y0, x0);
+      gui_set_pixel(y0, x0,Color);
     } else {
-      OLED_SetPixel(x0, y0);
+      gui_set_pixel(x0, y0,Color);
     }
     err -= dy;
     if (err < 0) {
@@ -138,6 +140,7 @@ void OLED_DrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
       err += dx;
     }
   }
+ 
 }
 
 
@@ -147,10 +150,10 @@ void OLED_DrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1) {
   * @param 	: x和y为起始坐标,length为长度
   * @retval	: 无
   */  
-void OLED_DrawHorizontalLine(int16_t x, int16_t y, int16_t length)
+void gui_draw_hline(int16_t x, int16_t y, int16_t length,GuiColor Color)
 {
 	int8_t i = 0;
-	if (y < 0 || y >=Width) { return; }
+	if (y < 0 || y >=GUIXMAX) { return; }
 
 	if (x < 0) 
 	{
@@ -158,77 +161,83 @@ void OLED_DrawHorizontalLine(int16_t x, int16_t y, int16_t length)
 		x = 0;
 	}
 
-	if ( (x + length) >Width)
+	if ( (x + length) >GUIXMAX)
 	{
-		length = (Width - x);
+		length = (GUIXMAX - x);
 	}
 
 	if (length <= 0) { return; }
 	for (i = 0; i < length;i++)
-		OLED_SetPixel(x+i, y);
+		gui_set_pixel(x+i, y,Color);
+ 
 }
 
 
 /**
   * @brief	: 画一个垂直线
-  * @note	: 无
+  * @note	  : 无
   * @param 	: x和y为起始坐标,length为长度
   * @retval	: 无
   */  	
-void OLED_DrawVerticalLine(int16_t x, int16_t y, int16_t length) 
+void gui_draw_vline(int16_t x, int16_t y, int16_t length,GuiColor Color) 
 {
 	int8_t i = 0;
-	if (x < 0 || x >= Width) return;
+	if (x < 0 || x >= GUIXMAX) return;
 
 	if (y < 0) {
 		length += y;
 		y = 0;
 	}
 
-	if ( (y + length) > Height) {
-		length = (Height - y);
+	if ( (y + length) >  GUIYMAX) {
+		length = ( GUIYMAX - y);
 	}
 
 	if (length <= 0) return;
 	for (i = 0; i < length;i++)
-		OLED_SetPixel(x, y+i);
+		gui_set_pixel(x, y+i,Color);
+
 }
 
 /**
   * @brief	: 画一个非实心的矩形
-  * @note	: 无
+  * @note	  : 无
   * @param 	: x和y为起始坐标,width和height分别为宽度(0~127)和高度(0~64)  
   * @retval	: 无
   */  	
-void OLED_DrawRect(int16_t x, int16_t y, int16_t width, int16_t height) {
-	OLED_DrawHorizontalLine(x, y, width);
-	OLED_DrawVerticalLine(x, y, height);
-	OLED_DrawVerticalLine(x + width - 1, y, height);
-	OLED_DrawHorizontalLine(x, y + height - 1, width);
+void gui_draw_rect(int16_t x, int16_t y, int16_t width, int16_t height,GuiColor Color) {
+	gui_draw_hline(x, y, width,Color);
+	gui_draw_vline(x, y, height,Color);
+	gui_draw_vline(x + width - 1, y, height,Color);
+	gui_draw_hline(x, y + height - 1, width,Color);
+ 
 }
 
 
 /**
   * @brief	: 画一个实心的矩形
-  * @note	: 无
+  * @note	  : 无
   * @param 	: xMov和yMov为起始坐标,width和height分别为宽度(0~127)和高度(0~64)  
   * @retval	: 无
   */  	
-void OLED_FillRect(int16_t xMove, int16_t yMove, int16_t width, int16_t height) {
+void gui_draw_frect(int16_t xMove, int16_t yMove, int16_t width, int16_t height,GuiColor Color) 
+{
 	for (int16_t x = xMove; x < xMove + width; x++) {
-		OLED_DrawVerticalLine(x, yMove, height);
+		gui_draw_vline(x, yMove, height,Color);
 	}
+  
 }
 
 
 
 /**
   * @brief	: 画一个圆
-  * @note	: 无
+  * @note	  : 无
   * @param 	: x和y为起始坐标,radius为半径 
   * @retval	: 无
   */  
-void OLED_DrawCircle(int16_t x0, int16_t y0, int16_t radius) {
+void gui_draw_circle(int16_t x0, int16_t y0, int16_t radius,GuiColor Color) 
+{
   	int16_t x = 0, y = radius;
 	int16_t dp = 1 - radius;
 	do {
@@ -237,31 +246,32 @@ void OLED_DrawCircle(int16_t x0, int16_t y0, int16_t radius) {
 		else
 			dp = dp + (x++) * 2 - (y--) * 2 + 5;
 
-		OLED_SetPixel(x0 + x, y0 + y);     //For the 8 octants
-		OLED_SetPixel(x0 - x, y0 + y);
-		OLED_SetPixel(x0 + x, y0 - y);
-		OLED_SetPixel(x0 - x, y0 - y);
-		OLED_SetPixel(x0 + y, y0 + x);
-		OLED_SetPixel(x0 - y, y0 + x);
-		OLED_SetPixel(x0 + y, y0 - x);
-		OLED_SetPixel(x0 - y, y0 - x);
+		gui_set_pixel(x0 + x, y0 + y,Color);     //For the 8 octants
+		gui_set_pixel(x0 - x, y0 + y,Color);
+		gui_set_pixel(x0 + x, y0 - y,Color);
+		gui_set_pixel(x0 - x, y0 - y,Color);
+		gui_set_pixel(x0 + y, y0 + x,Color);
+		gui_set_pixel(x0 - y, y0 + x,Color);
+		gui_set_pixel(x0 + y, y0 - x,Color);
+		gui_set_pixel(x0 - y, y0 - x,Color);
 
 	} while (x < y);
 
-  OLED_SetPixel(x0 + radius, y0);
-  OLED_SetPixel(x0, y0 + radius);
-  OLED_SetPixel(x0 - radius, y0);
-  OLED_SetPixel(x0, y0 - radius);
+  gui_set_pixel(x0 + radius, y0, Color);
+  gui_set_pixel(x0, y0 + radius, Color);
+  gui_set_pixel(x0 - radius, y0, Color);
+  gui_set_pixel(x0, y0 - radius, Color);
+ 
 }
 
 
 /**
   * @brief	: 画一条1/4的圆弧线
-  * @note	: 无
+  * @note	  : 无
   * @param 	: x和y为起始坐标,radius为半径，quads:选择对于的情况，共八种
   * @retval	: 无
   */  
-void OLED_DrawCircleQuads(int16_t x0, int16_t y0, int16_t radius, uint8_t quads) {
+void gui_draw_circlequads(int16_t x0, int16_t y0, int16_t radius, uint8_t quads,GuiColor Color) {
   int16_t x = 0, y = radius;
   int16_t dp = 1 - radius;
   while (x < y) {
@@ -270,43 +280,45 @@ void OLED_DrawCircleQuads(int16_t x0, int16_t y0, int16_t radius, uint8_t quads)
     else
       dp = dp + (x++) * 2 - (y--) * 2 + 5;
     if (quads & 0x1) {
-      OLED_SetPixel(x0 + x, y0 - y);
-      OLED_SetPixel(x0 + y, y0 - x);
+      gui_set_pixel(x0 + x, y0 - y, Color);
+      gui_set_pixel(x0 + y, y0 - x, Color);
     }
     if (quads & 0x2) {
-      OLED_SetPixel(x0 - y, y0 - x);
-      OLED_SetPixel(x0 - x, y0 - y);
+      gui_set_pixel(x0 - y, y0 - x, Color);
+      gui_set_pixel(x0 - x, y0 - y, Color);
     }
     if (quads & 0x4) {
-      OLED_SetPixel(x0 - y, y0 + x);
-      OLED_SetPixel(x0 - x, y0 + y);
+      gui_set_pixel(x0 - y, y0 + x, Color);
+      gui_set_pixel(x0 - x, y0 + y, Color);
     }
     if (quads & 0x8) {
-      OLED_SetPixel(x0 + x, y0 + y);
-      OLED_SetPixel(x0 + y, y0 + x);
+      gui_set_pixel(x0 + x, y0 + y, Color);
+      gui_set_pixel(x0 + y, y0 + x, Color);
     }
   }
   if (quads & 0x1 && quads & 0x8) {
-    OLED_SetPixel(x0 + radius, y0);
+    gui_set_pixel(x0 + radius, y0, Color);
   }
   if (quads & 0x4 && quads & 0x8) {
-    OLED_SetPixel(x0, y0 + radius);
+    gui_set_pixel(x0, y0 + radius, Color);
   }
   if (quads & 0x2 && quads & 0x4) {
-    OLED_SetPixel(x0 - radius, y0);
+    gui_set_pixel(x0 - radius, y0, Color);
   }
   if (quads & 0x1 && quads & 0x2) {
-    OLED_SetPixel(x0, y0 - radius);
+    gui_set_pixel(x0, y0 - radius, Color);
   }
+ 
 }
 
 /**
   * @brief	: 画一个实心圆
-  * @note	: 无
+  * @note	  : 无
   * @param 	: x和y为起始坐标,radius为半径 
   * @retval	: 无
   */  
-void OLED_FillCircle(int16_t x0, int16_t y0, int16_t radius) {
+void gui_draw_fcircle(int16_t x0, int16_t y0, int16_t radius,GuiColor Color) 
+{
   int16_t x = 0, y = radius;
 	int16_t dp = 1 - radius;
 	do {
@@ -315,40 +327,43 @@ void OLED_FillCircle(int16_t x0, int16_t y0, int16_t radius) {
     else
       dp = dp + (x++) * 2 - (y--) * 2 + 5;
 
-    OLED_DrawHorizontalLine(x0 - x, y0 - y, 2*x);
-    OLED_DrawHorizontalLine(x0 - x, y0 + y, 2*x);
-    OLED_DrawHorizontalLine(x0 - y, y0 - x, 2*y);
-    OLED_DrawHorizontalLine(x0 - y, y0 + x, 2*y);
+    gui_draw_hline(x0 - x, y0 - y, 2*x, Color);
+    gui_draw_hline(x0 - x, y0 + y, 2*x, Color);
+    gui_draw_hline(x0 - y, y0 - x, 2*y, Color);
+    gui_draw_hline(x0 - y, y0 + x, 2*y, Color);
 
 
 	} while (x < y);
-  OLED_DrawHorizontalLine(x0 - radius, y0, 2 * radius);
+  gui_draw_hline(x0 - radius, y0, 2 * radius, Color);
+ 
 
 }
 
 /**
   * @brief	: 画一个进度条
-  * @note	: 无
+  * @note	  : 无
   * @param 	: x和y为起始坐标,width和height分别为宽度(0~127)和高度(0~64), progress为进度占比
   * @retval	: 无
   */  
-void OLED_DrawProgressBar(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t progress) {
+void OLED_DrawProgressBar(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t progress,GuiColor Color)
+{
   uint16_t radius = height / 2;
   uint16_t xRadius = x + radius;
   uint16_t yRadius = y + radius;
   uint16_t doubleRadius = 2 * radius;
   uint16_t innerRadius = radius - 2;
 
-  OLED_DrawCircleQuads(xRadius, yRadius, radius, 0b00000110);
-  OLED_DrawHorizontalLine(xRadius, y, width - doubleRadius + 1);
-  OLED_DrawHorizontalLine(xRadius, y + height, width - doubleRadius + 1);
-  OLED_DrawCircleQuads(x + width - radius, yRadius, radius, 0b00001001);
+  gui_draw_circlequads(xRadius, yRadius, radius, 0b00000110, Color);
+  gui_draw_hline(xRadius, y, width - doubleRadius + 1, Color);
+  gui_draw_hline(xRadius, y + height, width - doubleRadius + 1, Color);
+  gui_draw_circlequads(x + width - radius, yRadius, radius, 0b00001001, Color);
 
-  uint16_t maxProgressWidth = (width - doubleRadius + 1) * progress / 100;
+  uint16_t maxProgressGUIXMAX = (width - doubleRadius + 1) * progress / 100;
 
-  OLED_FillCircle(xRadius, yRadius, innerRadius);
-  OLED_FillRect(xRadius + 1, y + 2, maxProgressWidth, height - 3);
-  OLED_FillCircle(xRadius + maxProgressWidth, yRadius, innerRadius);
+  gui_draw_fcircle(xRadius, yRadius, innerRadius, Color);
+  gui_draw_frect(xRadius + 1, y + 2, maxProgressGUIXMAX, height - 3, Color);
+  gui_draw_fcircle(xRadius + maxProgressGUIXMAX, yRadius, innerRadius, Color);
+  
 }
 
 
@@ -359,7 +374,8 @@ void OLED_DrawProgressBar(uint16_t x, uint16_t y, uint16_t width, uint16_t heigh
   * @param 	: x和y为起始坐标,width和height分别为宽度(0~127)和高度(0~64), xbm为图片首地址
   * @retval	: 无
   */  
-void OLED_DrawXbm(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *xbm) {
+void gui_drawxbm(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *xbm,GuiColor Color) 
+{
   int16_t widthInXbm = (width + 7) / 8;
   uint8_t data = 0;
 
@@ -372,10 +388,11 @@ void OLED_DrawXbm(int16_t xMove, int16_t yMove, int16_t width, int16_t height, c
       }
       // if there is a bit draw it
       if (data & 0x01) {
-        OLED_SetPixel(xMove + x, yMove + y);
+        gui_set_pixel(xMove + x, yMove + y, Color);
       }
     }
   }
+  
 }
 
 
@@ -385,17 +402,17 @@ void OLED_DrawXbm(int16_t xMove, int16_t yMove, int16_t width, int16_t height, c
   * @param 	: 
   * @retval	: 无
   */  
-void OLED_SetContrast(uint8_t contrast, uint8_t precharge, uint8_t comdetect) 
+void gui_set_contrast(uint8_t contrast, uint8_t precharge, uint8_t comdetect)
 {
-    OLED_WR_Byte(0xD9,OLED_CMD); //0xD9
-    OLED_WR_Byte(precharge,OLED_CMD); //0xF1 default, to lower the contrast, put 1-1F
-    OLED_WR_Byte(0x81,OLED_CMD);
-    OLED_WR_Byte(contrast,OLED_CMD); // 0-255
-    OLED_WR_Byte(0xDB,OLED_CMD); //0xDB, (additionally needed to lower the contrast)
-    OLED_WR_Byte(comdetect,OLED_CMD);	//0x40 default, to lower the contrast, put 0
-    OLED_WR_Byte(0xA4,OLED_CMD);
-    OLED_WR_Byte(0xA6,OLED_CMD);
-    OLED_WR_Byte(0xAF,OLED_CMD);
+    ssd1306_write_byte(0xD9,SSD1306_CMD); //0xD9
+    ssd1306_write_byte(precharge,SSD1306_CMD); //0xF1 default, to lower the contrast, put 1-1F
+    ssd1306_write_byte(0x81,SSD1306_CMD);
+    ssd1306_write_byte(contrast,SSD1306_CMD); // 0-255
+    ssd1306_write_byte(0xDB,SSD1306_CMD); //0xDB, (additionally needed to lower the contrast)
+    ssd1306_write_byte(comdetect,SSD1306_CMD);	//0x40 default, to lower the contrast, put 0
+    ssd1306_write_byte(0xA4,SSD1306_CMD);
+    ssd1306_write_byte(0xA6,SSD1306_CMD);
+    ssd1306_write_byte(0xAF,SSD1306_CMD);
 }
 
 
@@ -405,7 +422,7 @@ void OLED_SetContrast(uint8_t contrast, uint8_t precharge, uint8_t comdetect)
   * @param 	: Brightness为亮度值
   * @retval	: 无
   */  
-void OLED_SetBrightness(uint8_t brightness) 
+void gui_set_brightness(uint8_t brightness)
 {
     uint8_t contrast = brightness;
     if (brightness < 128) {
@@ -420,7 +437,7 @@ void OLED_SetBrightness(uint8_t brightness)
         precharge = 0;
     }
     uint8_t comdetect = brightness / 8;
-    OLED_SetContrast(contrast, precharge, comdetect);
+    gui_set_contrast(contrast, precharge, comdetect);
 }
 
 
@@ -430,7 +447,7 @@ void OLED_SetBrightness(uint8_t brightness)
   * @param 	: 
   * @retval	: 无
   */  
-void OLED_SetFont(const uint8_t *FontData)
+void gui_set_font(const uint8_t *FontData)
 {
   fontData = FontData;
 }
@@ -442,33 +459,23 @@ void OLED_SetFont(const uint8_t *FontData)
   * @param 	: 
   * @retval	: 无
   */  
-void OLED_SetTextAlignment(OLEDDISPLAY_TEXT_ALIGNMENT TextAlignment) 
+void gui_set_text_alignment(OLEDDISPLAY_TEXT_ALIGNMENT TextAlignment) 
 {
   textAlignment = TextAlignment;
 }
 
 
-/**
-  * @brief	: 设置颜色
-  * @note 	: 
-  * @param 	: 
-  * @retval	: 无
-  */  
-void OLED_SetColor(OLEDDISPLAY_COLOR   Color)
+
+
+
+char DefaultFontTableLookup(const uint8_t ch) 
 {
-  color = Color;
-}
-
-
-
-
-
-char DefaultFontTableLookup(const uint8_t ch) {
     // UTF-8 to font table index converter
     // Code form http://playground.arduino.cc/Main/Utf8ascii
 	static uint8_t LASTCHAR;
 
-	if (ch < 128) { // Standard ASCII-set 0..0x7F handling
+	if (ch < 128) 
+  { // Standard ASCII-set 0..0x7F handling
 		LASTCHAR = 0;
 		return ch;
 	}
@@ -486,11 +493,11 @@ char DefaultFontTableLookup(const uint8_t ch) {
 }
 
 
-void inline drawInternal(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *data, uint16_t offset, uint16_t bytesInData) 
+void inline drawInternal(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *data, uint16_t offset, uint16_t bytesInData,GuiColor Color) 
 {
   if (width < 0 || height < 0) return;
-  if (yMove + height < 0 || yMove > Height)  return;
-  if (xMove + width  < 0 || xMove > Width)   return;
+  if (yMove + height < 0 || yMove >  GUIYMAX)  return;
+  if (xMove + width  < 0 || xMove > GUIXMAX)   return;
 
   uint8_t  rasterHeight = 1 + ((height - 1) >> 3); // fast ceil(height / 8.0)
   int8_t   yOffset      = yMove & 7;
@@ -512,33 +519,33 @@ void inline drawInternal(int16_t xMove, int16_t yMove, int16_t width, int16_t he
     uint8_t currentByte = pgm_read_byte(data + offset + i);
 
     int16_t xPos = xMove + (i / rasterHeight);
-    int16_t yPos = ((yMove >> 3) + (i % rasterHeight)) * Width;
+    int16_t yPos = ((yMove >> 3) + (i % rasterHeight)) * GUIXMAX;
 
 //    int16_t yScreenPos = yMove + yOffset;
     int16_t dataPos    = xPos  + yPos;
 
-    if (dataPos >=  0  && dataPos < (Width * Height / 8) &&
-        xPos    >=  0  && xPos    < Width ) {
+    if (dataPos >=  0  && dataPos < (GUIXMAX *  GUIYMAX / 8) &&
+        xPos    >=  0  && xPos    < GUIXMAX ) {
 
       if (yOffset >= 0) {
-        switch (color) {
+        switch (Color) {
           case WHITE:   OLED_BUFFER[dataPos] |= currentByte << yOffset; break;
           case BLACK:   OLED_BUFFER[dataPos] &= ~(currentByte << yOffset); break;
           case INVERSE: OLED_BUFFER[dataPos] ^= currentByte << yOffset; break;
         }
 
-        if (dataPos < ((Width * Height / 8) - Width)) {
-          switch (color) {
-            case WHITE:   OLED_BUFFER[dataPos + Width] |= currentByte >> (8 - yOffset); break;
-            case BLACK:   OLED_BUFFER[dataPos + Width] &= ~(currentByte >> (8 - yOffset)); break;
-            case INVERSE: OLED_BUFFER[dataPos + Width] ^= currentByte >> (8 - yOffset); break;
+        if (dataPos < ((GUIXMAX *  GUIYMAX / 8) - GUIXMAX)) {
+          switch (Color) {
+            case WHITE:   OLED_BUFFER[dataPos + GUIXMAX] |= currentByte >> (8 - yOffset); break;
+            case BLACK:   OLED_BUFFER[dataPos + GUIXMAX] &= ~(currentByte >> (8 - yOffset)); break;
+            case INVERSE: OLED_BUFFER[dataPos + GUIXMAX] ^= currentByte >> (8 - yOffset); break;
           }
         }
       } else {
         // Make new offset position
         yOffset = -yOffset;
 
-        switch (color) {
+        switch (Color) {
           case WHITE:   OLED_BUFFER[dataPos] |= currentByte >> yOffset; break;
           case BLACK:   OLED_BUFFER[dataPos] &= ~(currentByte >> yOffset); break;
           case INVERSE: OLED_BUFFER[dataPos] ^= currentByte >> yOffset; break;
@@ -574,7 +581,8 @@ uint16_t getStringWidth(const char* text, uint16_t length)
 }
 
 
-void drawStringInternal(int16_t xMove, int16_t yMove, char* text, uint16_t textLength, uint16_t textWidth) {
+void drawStringInternal(int16_t xMove, int16_t yMove, char* text, uint16_t textLength,  uint16_t textWidth,GuiColor Color) 
+{
   uint8_t textHeight       = pgm_read_byte(fontData + HEIGHT_POS);
   uint8_t firstChar        = pgm_read_byte(fontData + FIRST_CHAR_POS);
   uint16_t sizeOfJumpTable = pgm_read_byte(fontData + CHAR_NUM_POS)  * JUMPTABLE_BYTES;
@@ -597,8 +605,8 @@ void drawStringInternal(int16_t xMove, int16_t yMove, char* text, uint16_t textL
   }
 
   // Don't draw anything if it is not on the screen.
-  if (xMove + textWidth  < 0 || xMove > Width ) {return;}
-  if (yMove + textHeight < 0 || yMove > Width ) {return;}
+  if (xMove + textWidth  < 0 || xMove > GUI_LCM_XMAX ) {return;}
+  if (yMove + textHeight < 0 || yMove > GUI_LCM_XMAX ) {return;}
 
   for (uint16_t j = 0; j < textLength; j++) {
     int16_t xPos = xMove + cursorX;
@@ -618,7 +626,7 @@ void drawStringInternal(int16_t xMove, int16_t yMove, char* text, uint16_t textL
       if (!(msbJumpToChar == 255 && lsbJumpToChar == 255)) {
         // Get the position of the char data
         uint16_t charDataPosition = JUMPTABLE_START + sizeOfJumpTable + ((msbJumpToChar << 8) + lsbJumpToChar);
-        drawInternal(xPos, yPos, currentCharWidth, textHeight, fontData, charDataPosition, charByteSize);
+        drawInternal(xPos, yPos, currentCharWidth, textHeight, fontData, charDataPosition, charByteSize, Color);
       }
       cursorX += currentCharWidth;
     }
@@ -633,7 +641,7 @@ void drawStringInternal(int16_t xMove, int16_t yMove, char* text, uint16_t textL
   * @param 	: xMove和yMove为起始坐标, strUser为输入的字符串
   * @retval	: 无
   */  	
-void OLED_DrawString(int16_t xMove, int16_t yMove, char *strUser) 
+void gui_draw_string(int16_t xMove, int16_t yMove, char *strUser,GuiColor Color)
 {
   uint16_t lineHeight = pgm_read_byte(fontData + HEIGHT_POS);
   uint16_t k = 0;
@@ -673,7 +681,7 @@ void OLED_DrawString(int16_t xMove, int16_t yMove, char *strUser)
   char* textPart = strtok(text,"\n");
   while (textPart != NULL) {
     uint16_t length = strlen(textPart);
-    drawStringInternal(xMove, yMove - yOffset + (line++) * lineHeight, textPart, length, getStringWidth(textPart, length));
+    drawStringInternal(xMove, yMove - yOffset + (line++) * lineHeight, textPart, length, getStringWidth(textPart, length),Color);
     textPart = strtok(NULL, "\n");
   }
   free(text);
@@ -683,10 +691,10 @@ void OLED_DrawString(int16_t xMove, int16_t yMove, char *strUser)
 /**
   * @brief	: 在显示屏中显示字符串
   * @note	  : 注意该函数可换行
-  * @param 	: xMove和yMove为起始坐标, maxLineWidth为字符串个数,strUser为输入的字符串
+  * @param 	: xMove和yMove为起始坐标, maxLineGUIXMAX为字符串个数,strUser为输入的字符串
   * @retval	: 无
   */ 	
-void OLED_DrawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxLineWidth, char* strUser)
+void gui_draw_lstring(int16_t xMove, int16_t yMove, uint16_t maxLineWidth, char *strUser,GuiColor Color)
 {
   uint16_t firstChar  = pgm_read_byte(fontData + FIRST_CHAR_POS);
   uint16_t lineHeight = pgm_read_byte(fontData + HEIGHT_POS);
@@ -732,7 +740,7 @@ void OLED_DrawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxLineWidth
         preferredBreakpoint = i;
         widthAtBreakpoint = strWidth;
       }
-      drawStringInternal(xMove, yMove + (lineNumber++) * lineHeight , &text[lastDrawnPos], preferredBreakpoint - lastDrawnPos, widthAtBreakpoint);
+      drawStringInternal(xMove, yMove + (lineNumber++) * lineHeight, &text[lastDrawnPos], preferredBreakpoint - lastDrawnPos, widthAtBreakpoint,Color);
       lastDrawnPos = preferredBreakpoint + 1;
       // It is possible that we did not draw all letters to i so we need
       // to account for the width of the chars from `i - preferredBreakpoint`
@@ -744,7 +752,7 @@ void OLED_DrawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxLineWidth
 
   // Draw last part if needed
   if (lastDrawnPos < length) {
-    drawStringInternal(xMove, yMove + lineNumber * lineHeight , &text[lastDrawnPos], length - lastDrawnPos, getStringWidth(&text[lastDrawnPos], length - lastDrawnPos));
+    drawStringInternal(xMove, yMove + lineNumber * lineHeight , &text[lastDrawnPos], length - lastDrawnPos, getStringWidth(&text[lastDrawnPos], length - lastDrawnPos),Color);
   }
 
   free(text);
@@ -753,60 +761,7 @@ void OLED_DrawStringMaxWidth(int16_t xMove, int16_t yMove, uint16_t maxLineWidth
 
 
 
-/**
-  * @brief	: 初始化OLED 
-  * @note	: 无
-  * @param 	: 无  
-  * @retval	: 无
-  */  			    
-void OLED_Init(void)
-{
 
-	/*****************管脚初始化************************
-	*             SCLK ---------------->GPIO4
-	*             SDA  ---------------->GPIO5
-	****************************************************
-	*/
-    gpio_config_t io_conf;
-    io_conf.intr_type = GPIO_INTR_DISABLE;
-    io_conf.mode = GPIO_MODE_OUTPUT;
-    io_conf.pin_bit_mask = (1ULL<<OLED_SCLK_PINS) |(1ULL<<OLED_SDIN_PINS);
-    io_conf.pull_down_en = 0;
-    io_conf.pull_up_en = 0;
-    gpio_config(&io_conf);
-
-
-    OLED_WR_Byte(0xAE,OLED_CMD);//--turn off oled panel
-    OLED_WR_Byte(0x00,OLED_CMD);//---set low column address
-    OLED_WR_Byte(0x10,OLED_CMD);//---set high column address
-    OLED_WR_Byte(0x40,OLED_CMD);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
-    OLED_WR_Byte(0x81,OLED_CMD);//--set contrast control register
-    OLED_WR_Byte(0xCF,OLED_CMD); // Set SEG Output Current Brightness
-    OLED_WR_Byte(0xA1,OLED_CMD);//--Set SEG/Column Mapping      0xa0左右反置 0xa1正常
-    OLED_WR_Byte(0xC8,OLED_CMD);//--Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
-    OLED_WR_Byte(0xA6,OLED_CMD);//--set normal display
-    OLED_WR_Byte(0xA8,OLED_CMD);//--set multiplex ratio(1 to 64)
-    OLED_WR_Byte(0x3f,OLED_CMD);//--1/64 duty
-    OLED_WR_Byte(0xD3,OLED_CMD);//-set display offset	Shift Mapping RAM Counter (0x00~0x3F)
-    OLED_WR_Byte(0x00,OLED_CMD);//-not offset
-    OLED_WR_Byte(0xd5,OLED_CMD);//--set display clock divide ratio/oscillator frequency
-    OLED_WR_Byte(0x80,OLED_CMD);//--set divide ratio, Set Clock as 100 Frames/Sec
-    OLED_WR_Byte(0xD9,OLED_CMD);//--set pre-charge period
-    OLED_WR_Byte(0xF1,OLED_CMD);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
-    OLED_WR_Byte(0xDA,OLED_CMD);//--set com pins hardware configuration
-    OLED_WR_Byte(0x12,OLED_CMD);
-    OLED_WR_Byte(0xDB,OLED_CMD);//--set vcomh
-    OLED_WR_Byte(0x40,OLED_CMD);//Set VCOM Deselect Level
-    OLED_WR_Byte(0x20,OLED_CMD);//-Set Page Addressing Mode (0x00/0x01/0x02)
-    OLED_WR_Byte(0x02,OLED_CMD);//
-    OLED_WR_Byte(0x8D,OLED_CMD);//--set Charge Pump enable/disable
-    OLED_WR_Byte(0x14,OLED_CMD);//--set(0x10) disable
-    OLED_WR_Byte(0xA4,OLED_CMD);// Disable Entire Display On (0xa4/0xa5)
-    OLED_WR_Byte(0xA6,OLED_CMD);// Disable Inverse Display On (0xa6/a7) 
-    OLED_WR_Byte(0xAF,OLED_CMD);//--turn on oled panel
-    OLED_Clear();
-
-}  
 
 
 

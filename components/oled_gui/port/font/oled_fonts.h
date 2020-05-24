@@ -1,5 +1,5 @@
-#ifndef OLEDDISPLAYFONTS_h
-#define OLEDDISPLAYFONTS_h
+#ifndef OLED_FONTS_h
+#define OLED_FONTS_h
 
 
 const uint8_t ArialMT_Plain_10[]  = {

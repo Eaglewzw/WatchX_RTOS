@@ -1,6 +1,4 @@
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/IIC_OLED/libIIC_OLED.a
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/Key/libKey.a
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/app_update/libapp_update.a
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/app_update/libapp_update.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/bootloader_support/libbootloader_support.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/coap/libcoap.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/console/libconsole.a
@@ -19,6 +17,7 @@ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/IIC_OLED/libIIC_OLED.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/http_parser/libhttp_parser.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/jsmn/libjsmn.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/json/libjson.a
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/key/libkey.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/libsodium/liblibsodium.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/log/liblog.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/lwip/liblwip.a
@@ -28,6 +27,7 @@ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/IIC_OLED/libIIC_OLED.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/mqtt/libmqtt.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/newlib/libnewlib.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/nvs_flash/libnvs_flash.a
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/oled_gui/liboled_gui.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/openssl/libopenssl.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/protobuf-c/libprotobuf-c.a
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/protocomm/libprotocomm.a

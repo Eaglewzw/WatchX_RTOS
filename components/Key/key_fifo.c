@@ -1,5 +1,5 @@
-#include "KeyGpio.h"
-#include "KeyFifo.h"
+#include "key_gpio.h"
+#include "key_fifo.h"
 
 
 static NewKey Button[KEY_COUNT];//定义四个按键
@@ -14,20 +14,20 @@ static uint8_t IsBackKeyDown(void) {if (BackKeyLevel == 0) return 1;else return 
 
 /**
   * @brief	: 初始化按键GPIO引脚、按键FIFO的值
-  * @note	: 无  
+  * @note	  : 无  
   * @param 	: 无
   * @retval	: 无
   */
-void Key_Init(void)
+void key_init(void)
 {
-    KeyGpio_Init();
-    Key_Fifo_Init();
+    key_gpio_init();
+    key_fifo_init();
 }
 
 
 
 
-void Key_Fifo_Init(void)  
+void key_fifo_init(void)  
 {  
 
     uint8_t i;  
@@ -61,7 +61,7 @@ void Key_Fifo_Init(void)
   * @param 	: 无
   * @retval	: 无
   */
-void Key_Fifo_Clear(void)
+void key_fifo_clear(void)
 {
 	ButtonFifo.Read = ButtonFifo.Write;
 }
@@ -72,7 +72,7 @@ void Key_Fifo_Clear(void)
   * @param 	:
   * @retval	: 按键代码
   */
-uint8_t Key_Fifo_Get(void)
+uint8_t key_fifo_get(void)
 {
 	uint8_t ret;
  
@@ -96,7 +96,7 @@ uint8_t Key_Fifo_Get(void)
   * @param 	: ucKeyID : 按键ID，从0开始
   * @retval	: 1 表示按下， 0 表示未按下
   */
-uint8_t Key_GetState(Key_ID ucKeyID)
+uint8_t key_get_state(Key_ID ucKeyID)
 {
 	return Button[ucKeyID].State;
 }
@@ -108,7 +108,7 @@ uint8_t Key_GetState(Key_ID ucKeyID)
   *			  RepeatSpeed : 连发速度
   * @retval	: 无
   */
-void Ket_SetParam(uint8_t ucKeyID, uint16_t LongTime, uint8_t  RepeatSpeed)
+void key_set_param(uint8_t ucKeyID, uint16_t LongTime, uint8_t  RepeatSpeed)
 {
 	Button[ucKeyID].LongTime = LongTime;	     	 /* 长按时间 0 表示不检测长按键事件 */
 	Button[ucKeyID].RepeatSpeed = RepeatSpeed;	 /* 长按键连发的速度，0表示不支持连发 */
@@ -121,13 +121,13 @@ void Ket_SetParam(uint8_t ucKeyID, uint16_t LongTime, uint8_t  RepeatSpeed)
   * @param 	: 无
   * @retval	: 无
   */
-void Key_Scan(void)
+void key_scan(void)
 {
 	uint8_t i;
  
 	for (i = 0; i < KEY_COUNT; i++)
 	{
-		Key_Detect(i);
+		key_detect(i);
 	}
 }
 
@@ -138,7 +138,7 @@ void Key_Scan(void)
   * @param 	: KeyCode : 按键代码
   * @retval	: 无
   */
-void Key_Fifo_Put(uint8_t KeyCode)
+void key_fifo_put(uint8_t KeyCode)
 {
 	ButtonFifo.Buf[ButtonFifo.Write] = KeyCode;
  
@@ -153,7 +153,7 @@ void Key_Fifo_Put(uint8_t KeyCode)
   * @param 	: 按键数
   * @retval	: 无
   */
-void Key_Detect(uint8_t i)
+void key_detect(uint8_t i)
 {
 	NewKey *pBtn;
  
@@ -175,7 +175,7 @@ void Key_Detect(uint8_t i)
 				pBtn->State = 1;
  
 				/* 发送按钮按下的消息(此处和枚举类型数值要相同) */
-				Key_Fifo_Put((uint8_t)(3 * i + 1));
+				key_fifo_put((uint8_t)(3 * i + 1));
 			}
       //长按情况
 			if (pBtn->LongTime > 0)
@@ -193,13 +193,13 @@ void Key_Detect(uint8_t i)
                             {
                                 pBtn->RepeatCount = 0;
                                 /* 常按键后，每隔10ms发送1个按键 */
-                                Key_Fifo_Put((uint8_t)(3 * i + 1));
+                                key_fifo_put((uint8_t)(3 * i + 1));
                             }          
                         }
                         else
                         {
                             /* 键值放入按键FIFO */
-                            Key_Fifo_Put((uint8_t)(3 * i + 3));
+                            key_fifo_put((uint8_t)(3 * i + 3));
                         }
                     }
                 }
@@ -223,7 +223,7 @@ void Key_Detect(uint8_t i)
 				pBtn->State = 0;
  
 				/* 发送按钮弹起的消息 */
-				Key_Fifo_Put((uint8_t)(3 * i + 2));
+				key_fifo_put((uint8_t)(3 * i + 2));
 			}
 		}
 		pBtn->LongCount = 0;

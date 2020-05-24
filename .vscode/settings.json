@@ -14,6 +14,10 @@
         "sdkconfig.h": "c",
         "oleddisplay.h": "c",
         "random": "c",
-        "limits": "c"
+        "limits": "c",
+        "key_fifo.h": "c",
+        "task.h": "c",
+        "string.h": "c",
+        "complex": "c"
     }
 }
