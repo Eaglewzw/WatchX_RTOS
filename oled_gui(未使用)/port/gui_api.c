@@ -7,35 +7,35 @@
 #include "gui_api.h"
 
 
-uint8_t OLED_BUFFER[GUIXMAX *  GUIYMAX / 8];  //OLEDæ˜¾ç¤ºå±ç¼“å†²åŒº
-const uint8_t *fontData=ArialMT_Plain_10;  //å­—ä½“   
-OLEDDISPLAY_TEXT_ALIGNMENT textAlignment=TEXT_ALIGN_LEFT; //å­—ä½“å¯¹é½æ–¹å¼
+uint8_t OLED_BUFFER[GUIXMAX *  GUIYMAX / 8];  //OLEDÏÔÊ¾ÆÁ»º³åÇø
+const uint8_t *fontData=ArialMT_Plain_10;  //×ÖÌå   
+OLEDDISPLAY_TEXT_ALIGNMENT textAlignment=TEXT_ALIGN_LEFT; //×ÖÌå¶ÔÆë·½Ê½
 
 
 
 /**
-  * @brief	: å¼€å¯OLEDæ˜¾ç¤º   
-  * @note	  : æ—   
-  * @param 	: æ— 
-  * @retval	: æ— 
+  * @brief	: ¿ªÆôOLEDÏÔÊ¾   
+  * @note	  : ÎŞ  
+  * @param 	: ÎŞ
+  * @retval	: ÎŞ
   */
 void gui_display_on(void)
 {
-	ssd1306_write_byte(0X8D,SSD1306_CMD);  //SET DCDCå‘½ä»¤
+	ssd1306_write_byte(0X8D,SSD1306_CMD);  //SET DCDCÃüÁî
 	ssd1306_write_byte(0X14,SSD1306_CMD);  //DCDC ON
 	ssd1306_write_byte(0XAF,SSD1306_CMD);  //DISPLAY ON
 }
 
 
 /**
-  * @brief	: å…³é—­OLEDæ˜¾ç¤º   
-  * @note	: æ—   
-  * @param 	: æ— 
-  * @retval	: æ— 
+  * @brief	: ¹Ø±ÕOLEDÏÔÊ¾   
+  * @note	: ÎŞ  
+  * @param 	: ÎŞ
+  * @retval	: ÎŞ
   */  
 void gui_display_off(void)
 {
-	ssd1306_write_byte(0X8D,SSD1306_CMD);  //SET DCDCå‘½ä»¤
+	ssd1306_write_byte(0X8D,SSD1306_CMD);  //SET DCDCÃüÁî
 	ssd1306_write_byte(0X10,SSD1306_CMD);  //DCDC OFF
 	ssd1306_write_byte(0XAE,SSD1306_CMD);  //DISPLAY OFF
 }	
@@ -44,19 +44,19 @@ void gui_display_off(void)
 
 
 /**
-  * @brief	: æ›´æ–°æ˜¾å­˜åˆ°LCD		 
-  * @note	: æ—   
-  * @param 	: æ— 
-  * @retval	: æ— 
+  * @brief	: ¸üĞÂÏÔ´æµ½LCD		 
+  * @note	: ÎŞ  
+  * @param 	: ÎŞ
+  * @retval	: ÎŞ
   */  
 void gui_refresh_gram(void)
 {
 	uint8_t i,n;		    
 	for(i=0;i<8;i++)  
 	{  
-		ssd1306_write_byte (0xb0+i,SSD1306_CMD);    //è®¾ç½®é¡µåœ°å€ï¼ˆ0~7ï¼‰
-		ssd1306_write_byte (0x00,SSD1306_CMD);      //è®¾ç½®æ˜¾ç¤ºä½ç½®â€”åˆ—ä½åœ°å€
-		ssd1306_write_byte (0x10,SSD1306_CMD);      //è®¾ç½®æ˜¾ç¤ºä½ç½®â€”åˆ—é«˜åœ°å€   
+		ssd1306_write_byte (0xb0+i,SSD1306_CMD);    //ÉèÖÃÒ³µØÖ·£¨0~7£©
+		ssd1306_write_byte (0x00,SSD1306_CMD);      //ÉèÖÃÏÔÊ¾Î»ÖÃ¡ªÁĞµÍµØÖ·
+		ssd1306_write_byte (0x10,SSD1306_CMD);      //ÉèÖÃÏÔÊ¾Î»ÖÃ¡ªÁĞ¸ßµØÖ·   
 		for(n=0;n<128;n++)
       ssd1306_write_byte(OLED_BUFFER[n+i*128], SSD1306_DATA);
   }   
@@ -64,24 +64,24 @@ void gui_refresh_gram(void)
 
 
 /**
-  * @brief	: æ¸…å±ï¼Œå°†æ•°æ®å…¨éƒ¨å¡«å…¥é›¶
-  * @note	: æ—   
-  * @param 	: æ— 
-  * @retval	: æ— 
+  * @brief	: ÇåÆÁ£¬½«Êı¾İÈ«²¿ÌîÈëÁã
+  * @note	: ÎŞ  
+  * @param 	: ÎŞ
+  * @retval	: ÎŞ
   */  
 void gui_clear_gram(void) 
 {  	    
   memset(OLED_BUFFER,0x00,sizeof(OLED_BUFFER)); 
-	gui_refresh_gram();//æ›´æ–°æ˜¾ç¤º
+	gui_refresh_gram();//¸üĞÂÏÔÊ¾
 }
 
 
 
 /**
-  * @brief	: ç”»ç‚¹ 
-  * @note	  : æ— 
-  * @param 	: x:0~127  y:0~63  t:1 å¡«å…… 0,æ¸…ç©º  
-  * @retval	: æ— 
+  * @brief	: »­µã 
+  * @note	  : ÎŞ
+  * @param 	: x:0~127  y:0~63  t:1 Ìî³ä 0,Çå¿Õ  
+  * @retval	: ÎŞ
   */  
 void gui_set_pixel(uint8_t x, uint8_t y,GuiColor Color)
 {
@@ -96,11 +96,34 @@ void gui_set_pixel(uint8_t x, uint8_t y,GuiColor Color)
  
 }
 
+
 /**
-  * @brief	: ç”»ä¸€æ¡çº¿æ®µ
-  * @note	: xçš„å–å€¼0-127,yçš„å–å€¼èŒƒå›´ä¸º0-64
-  * @param 	: x0,y0ä¸ºèµ·å§‹åæ ‡ï¼Œx1,y1ä¸ºç»ˆç‚¹åæ ‡  
-  * @retval	: æ— 
+  * @brief	: »ñÈ¡ÆÁÄ»Ä³µãµÄÏñËØ 
+  * @note	  : ÎŞ
+  * @param 	: x:0~127  y:0~63   
+  * @retval	: ·µ»ØÖµÎª0»ò1£¬-1±íÊ¾³ö´í
+  */  
+int gui_get_pixel(uint8_t x, uint8_t y)
+{
+  int eColor=-1;
+  if (x >= 0 && x < GUIXMAX && y >= 0 && y <  GUIYMAX) 
+  {
+    eColor = OLED_BUFFER[x + (y / 8) * GUIXMAX]; 
+
+  }else{
+    eColor=-1;  
+  }
+  return eColor;
+}
+
+
+
+
+/**
+  * @brief	: »­Ò»ÌõÏß¶Î
+  * @note	: xµÄÈ¡Öµ0-127,yµÄÈ¡Öµ·¶Î§Îª0-64
+  * @param 	: x0,y0ÎªÆğÊ¼×ø±ê£¬x1,y1ÎªÖÕµã×ø±ê  
+  * @retval	: ÎŞ
   */  
 void gui_draw_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1,GuiColor Color)
  {
@@ -145,10 +168,10 @@ void gui_draw_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1,GuiColor Color
 
 
 /**
-  * @brief	: ç”»ä¸€ä¸ªæ°´å¹³çº¿
-  * @note	: æ— 
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,lengthä¸ºé•¿åº¦
-  * @retval	: æ— 
+  * @brief	: »­Ò»¸öË®Æ½Ïß
+  * @note	: ÎŞ
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,lengthÎª³¤¶È
+  * @retval	: ÎŞ
   */  
 void gui_draw_hline(int16_t x, int16_t y, int16_t length,GuiColor Color)
 {
@@ -174,10 +197,10 @@ void gui_draw_hline(int16_t x, int16_t y, int16_t length,GuiColor Color)
 
 
 /**
-  * @brief	: ç”»ä¸€ä¸ªå‚ç›´çº¿
-  * @note	  : æ— 
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,lengthä¸ºé•¿åº¦
-  * @retval	: æ— 
+  * @brief	: »­Ò»¸ö´¹Ö±Ïß
+  * @note	  : ÎŞ
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,lengthÎª³¤¶È
+  * @retval	: ÎŞ
   */  	
 void gui_draw_vline(int16_t x, int16_t y, int16_t length,GuiColor Color) 
 {
@@ -200,10 +223,10 @@ void gui_draw_vline(int16_t x, int16_t y, int16_t length,GuiColor Color)
 }
 
 /**
-  * @brief	: ç”»ä¸€ä¸ªéå®å¿ƒçš„çŸ©å½¢
-  * @note	  : æ— 
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,widthå’Œheightåˆ†åˆ«ä¸ºå®½åº¦(0~127)å’Œé«˜åº¦(0~64)  
-  * @retval	: æ— 
+  * @brief	: »­Ò»¸ö·ÇÊµĞÄµÄ¾ØĞÎ
+  * @note	  : ÎŞ
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,widthºÍheight·Ö±ğÎª¿í¶È(0~127)ºÍ¸ß¶È(0~64)  
+  * @retval	: ÎŞ
   */  	
 void gui_draw_rect(int16_t x, int16_t y, int16_t width, int16_t height,GuiColor Color) {
 	gui_draw_hline(x, y, width,Color);
@@ -215,10 +238,10 @@ void gui_draw_rect(int16_t x, int16_t y, int16_t width, int16_t height,GuiColor 
 
 
 /**
-  * @brief	: ç”»ä¸€ä¸ªå®å¿ƒçš„çŸ©å½¢
-  * @note	  : æ— 
-  * @param 	: xMovå’ŒyMovä¸ºèµ·å§‹åæ ‡,widthå’Œheightåˆ†åˆ«ä¸ºå®½åº¦(0~127)å’Œé«˜åº¦(0~64)  
-  * @retval	: æ— 
+  * @brief	: »­Ò»¸öÊµĞÄµÄ¾ØĞÎ
+  * @note	  : ÎŞ
+  * @param 	: xMovºÍyMovÎªÆğÊ¼×ø±ê,widthºÍheight·Ö±ğÎª¿í¶È(0~127)ºÍ¸ß¶È(0~64)  
+  * @retval	: ÎŞ
   */  	
 void gui_draw_frect(int16_t xMove, int16_t yMove, int16_t width, int16_t height,GuiColor Color) 
 {
@@ -231,10 +254,10 @@ void gui_draw_frect(int16_t xMove, int16_t yMove, int16_t width, int16_t height,
 
 
 /**
-  * @brief	: ç”»ä¸€ä¸ªåœ†
-  * @note	  : æ— 
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,radiusä¸ºåŠå¾„ 
-  * @retval	: æ— 
+  * @brief	: »­Ò»¸öÔ²
+  * @note	  : ÎŞ
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,radiusÎª°ë¾¶ 
+  * @retval	: ÎŞ
   */  
 void gui_draw_circle(int16_t x0, int16_t y0, int16_t radius,GuiColor Color) 
 {
@@ -266,10 +289,10 @@ void gui_draw_circle(int16_t x0, int16_t y0, int16_t radius,GuiColor Color)
 
 
 /**
-  * @brief	: ç”»ä¸€æ¡1/4çš„åœ†å¼§çº¿
-  * @note	  : æ— 
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,radiusä¸ºåŠå¾„ï¼Œquads:é€‰æ‹©å¯¹äºçš„æƒ…å†µï¼Œå…±å…«ç§
-  * @retval	: æ— 
+  * @brief	: »­Ò»Ìõ1/4µÄÔ²»¡Ïß
+  * @note	  : ÎŞ
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,radiusÎª°ë¾¶£¬quads:Ñ¡Ôñ¶ÔÓÚµÄÇé¿ö£¬¹²°ËÖÖ
+  * @retval	: ÎŞ
   */  
 void gui_draw_circlequads(int16_t x0, int16_t y0, int16_t radius, uint8_t quads,GuiColor Color) {
   int16_t x = 0, y = radius;
@@ -312,10 +335,10 @@ void gui_draw_circlequads(int16_t x0, int16_t y0, int16_t radius, uint8_t quads,
 }
 
 /**
-  * @brief	: ç”»ä¸€ä¸ªå®å¿ƒåœ†
-  * @note	  : æ— 
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,radiusä¸ºåŠå¾„ 
-  * @retval	: æ— 
+  * @brief	: »­Ò»¸öÊµĞÄÔ²
+  * @note	  : ÎŞ
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,radiusÎª°ë¾¶ 
+  * @retval	: ÎŞ
   */  
 void gui_draw_fcircle(int16_t x0, int16_t y0, int16_t radius,GuiColor Color) 
 {
@@ -340,10 +363,10 @@ void gui_draw_fcircle(int16_t x0, int16_t y0, int16_t radius,GuiColor Color)
 }
 
 /**
-  * @brief	: ç”»ä¸€ä¸ªè¿›åº¦æ¡
-  * @note	  : æ— 
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,widthå’Œheightåˆ†åˆ«ä¸ºå®½åº¦(0~127)å’Œé«˜åº¦(0~64), progressä¸ºè¿›åº¦å æ¯”
-  * @retval	: æ— 
+  * @brief	: »­Ò»¸ö½ø¶ÈÌõ
+  * @note	  : ÎŞ
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,widthºÍheight·Ö±ğÎª¿í¶È(0~127)ºÍ¸ß¶È(0~64), progressÎª½ø¶ÈÕ¼±È
+  * @retval	: ÎŞ
   */  
 void OLED_DrawProgressBar(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t progress,GuiColor Color)
 {
@@ -369,10 +392,10 @@ void OLED_DrawProgressBar(uint16_t x, uint16_t y, uint16_t width, uint16_t heigh
 
 
 /**
-  * @brief	: ç”»ä¸€å¹…å›¾ç‰‡
-  * @note 	: å–æ¨¡æ–¹å¼:é˜´ç +é€è¡Œå¼+é€†å‘+C51
-  * @param 	: xå’Œyä¸ºèµ·å§‹åæ ‡,widthå’Œheightåˆ†åˆ«ä¸ºå®½åº¦(0~127)å’Œé«˜åº¦(0~64), xbmä¸ºå›¾ç‰‡é¦–åœ°å€
-  * @retval	: æ— 
+  * @brief	: »­Ò»·ùÍ¼Æ¬
+  * @note 	: È¡Ä£·½Ê½:ÒõÂë+ÖğĞĞÊ½+ÄæÏò+C51
+  * @param 	: xºÍyÎªÆğÊ¼×ø±ê,widthºÍheight·Ö±ğÎª¿í¶È(0~127)ºÍ¸ß¶È(0~64), xbmÎªÍ¼Æ¬Ê×µØÖ·
+  * @retval	: ÎŞ
   */  
 void gui_drawxbm(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *xbm,GuiColor Color) 
 {
@@ -397,10 +420,10 @@ void gui_drawxbm(int16_t xMove, int16_t yMove, int16_t width, int16_t height, co
 
 
 /**
-  * @brief	: æ˜¾ç¤ºå±äº®åº¦
+  * @brief	: ÏÔÊ¾ÆÁÁÁ¶È
   * @note 	: 
   * @param 	: 
-  * @retval	: æ— 
+  * @retval	: ÎŞ
   */  
 void gui_set_contrast(uint8_t contrast, uint8_t precharge, uint8_t comdetect)
 {
@@ -417,10 +440,10 @@ void gui_set_contrast(uint8_t contrast, uint8_t precharge, uint8_t comdetect)
 
 
 /**
-  * @brief	: OLEDæ˜¾ç¤ºå±äº®åº¦æ”¹å˜
+  * @brief	: OLEDÏÔÊ¾ÆÁÁÁ¶È¸Ä±ä
   * @note 	: 
-  * @param 	: Brightnessä¸ºäº®åº¦å€¼
-  * @retval	: æ— 
+  * @param 	: BrightnessÎªÁÁ¶ÈÖµ
+  * @retval	: ÎŞ
   */  
 void gui_set_brightness(uint8_t brightness)
 {
@@ -442,10 +465,10 @@ void gui_set_brightness(uint8_t brightness)
 
 
 /**
-  * @brief	: è®¾ç½®å­—ä½“
-  * @note 	: æ”¾å…¥å­—ä½“é¦–åœ°å€
+  * @brief	: ÉèÖÃ×ÖÌå
+  * @note 	: ·ÅÈë×ÖÌåÊ×µØÖ·
   * @param 	: 
-  * @retval	: æ— 
+  * @retval	: ÎŞ
   */  
 void gui_set_font(const uint8_t *FontData)
 {
@@ -454,10 +477,10 @@ void gui_set_font(const uint8_t *FontData)
 
 
 /**
-  * @brief	: è®¾ç½®å­—ä½“å¯¹é½æ–¹å¼
+  * @brief	: ÉèÖÃ×ÖÌå¶ÔÆë·½Ê½
   * @note 	: 
   * @param 	: 
-  * @retval	: æ— 
+  * @retval	: ÎŞ
   */  
 void gui_set_text_alignment(OLEDDISPLAY_TEXT_ALIGNMENT TextAlignment) 
 {
@@ -493,7 +516,7 @@ char DefaultFontTableLookup(const uint8_t ch)
 }
 
 
-void inline drawInternal(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *data, uint16_t offset, uint16_t bytesInData,GuiColor Color) 
+void inline drawInternal(int16_t xMove, int16_t yMove, int16_t width, int16_t height, const uint8_t *data, uint16_t offset, uint16_t bytesInData, GuiColor Color) 
 {
   if (width < 0 || height < 0) return;
   if (yMove + height < 0 || yMove >  GUIYMAX)  return;
@@ -636,10 +659,10 @@ void drawStringInternal(int16_t xMove, int16_t yMove, char* text, uint16_t textL
 
 
 /**
-  * @brief	: åœ¨æ˜¾ç¤ºå±ä¸­æ˜¾ç¤ºä¸€è¡Œå­—ç¬¦ä¸²
-  * @note	  : æ³¨æ„è¯¥å‡½æ•°ä¸ä¼šæ¢è¡Œ
-  * @param 	: xMoveå’ŒyMoveä¸ºèµ·å§‹åæ ‡, strUserä¸ºè¾“å…¥çš„å­—ç¬¦ä¸²
-  * @retval	: æ— 
+  * @brief	: ÔÚÏÔÊ¾ÆÁÖĞÏÔÊ¾Ò»ĞĞ×Ö·û´®
+  * @note	  : ×¢Òâ¸Ãº¯Êı²»»á»»ĞĞ
+  * @param 	: xMoveºÍyMoveÎªÆğÊ¼×ø±ê, strUserÎªÊäÈëµÄ×Ö·û´®
+  * @retval	: ÎŞ
   */  	
 void gui_draw_string(int16_t xMove, int16_t yMove, char *strUser,GuiColor Color)
 {
@@ -689,10 +712,10 @@ void gui_draw_string(int16_t xMove, int16_t yMove, char *strUser,GuiColor Color)
 }
 
 /**
-  * @brief	: åœ¨æ˜¾ç¤ºå±ä¸­æ˜¾ç¤ºå­—ç¬¦ä¸²
-  * @note	  : æ³¨æ„è¯¥å‡½æ•°å¯æ¢è¡Œ
-  * @param 	: xMoveå’ŒyMoveä¸ºèµ·å§‹åæ ‡, maxLineGUIXMAXä¸ºå­—ç¬¦ä¸²ä¸ªæ•°,strUserä¸ºè¾“å…¥çš„å­—ç¬¦ä¸²
-  * @retval	: æ— 
+  * @brief	: ÔÚÏÔÊ¾ÆÁÖĞÏÔÊ¾×Ö·û´®
+  * @note	  : ×¢Òâ¸Ãº¯Êı¿É»»ĞĞ
+  * @param 	: xMoveºÍyMoveÎªÆğÊ¼×ø±ê, maxLineGUIXMAXÎª×Ö·û´®¸öÊı,strUserÎªÊäÈëµÄ×Ö·û´®
+  * @retval	: ÎŞ
   */ 	
 void gui_draw_lstring(int16_t xMove, int16_t yMove, uint16_t maxLineWidth, char *strUser,GuiColor Color)
 {

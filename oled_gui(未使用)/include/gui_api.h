@@ -40,6 +40,8 @@ void gui_refresh_gram(void);
 void gui_clear_gram(void);
 /* 在显示屏中点亮一个像素点 */
 void gui_set_pixel(uint8_t x, uint8_t y,GuiColor Color);
+/* 获取显示屏中的一个像素点 */
+int gui_get_pixel(uint8_t x, uint8_t y);
 /* 画一条线 */
 void gui_draw_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1,GuiColor Color);
 /* 画一条水平线 */
@@ -75,15 +77,32 @@ void gui_draw_lstring(int16_t xMove, int16_t yMove, uint16_t maxLineGUIXMAX, cha
 
 
 /*在屏幕上添加一个窗口*/
-int8_t gui_add_win(Win *pWindow);
+int8_t gui_add_win(win_config_t *pWindow);
 /* 显示窗口 */
 void gui_window_disp(void);
 /* 删除顶层窗口 */
 void gui_top_win_delete(void);
 /* 获取顶层窗口 */
-Win *gui_top_win_get(void);
+win_config_t *gui_top_win_get(void);
 /* 窗口初始化 */
 void gui_windows_init(void);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

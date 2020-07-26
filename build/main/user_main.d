@@ -124,10 +124,17 @@ user_main.o: \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/err.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/include/lwip/sys.h \
  H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/key/include/key_fifo.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_api.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_typedef.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_config.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/port/include/ssd1306_i2c.h
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/OLED.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SSD1306_I2C.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Basic.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Common.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Config.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Typedef.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Interface.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_IconResource.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Text.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Basic.h \
+ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_FontResource.h
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdio.h:
 
@@ -377,11 +384,25 @@ H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/lwip/lwip/src/incl
 
 H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/key/include/key_fifo.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_api.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/OLED.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_typedef.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SSD1306_I2C.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/include/gui_config.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Basic.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/port/include/ssd1306_i2c.h:
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Common.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Config.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Typedef.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Interface.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_IconResource.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Text.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_Basic.h:
+
+H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/oled_gui/inc/SGUI_FontResource.h:
 /home/Administrator/WatchX_RTOS/main/./user_main.c:

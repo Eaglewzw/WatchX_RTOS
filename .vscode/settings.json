@@ -9,15 +9,16 @@
         "sstream": "c",
         "hw_timer.h": "c",
         "key.h": "c",
-        "oleddisplayfonts.h": "c",
         "*.inc": "c",
         "sdkconfig.h": "c",
-        "oleddisplay.h": "c",
         "random": "c",
         "limits": "c",
         "key_fifo.h": "c",
         "task.h": "c",
         "string.h": "c",
-        "complex": "c"
+        "complex": "c",
+        "sys.h": "c",
+        "sgui_basic.h": "c",
+        "esp_log.h": "c"
     }
 }

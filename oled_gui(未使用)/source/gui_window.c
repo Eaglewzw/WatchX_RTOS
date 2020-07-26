@@ -16,7 +16,7 @@ static struct GuiWinManage winManage;
   *@param : pWindow 窗口指针
   *@retval: None
   */
-void gui_draw_window(Win *pWindow)
+void gui_draw_window(win_config_t *pWindow)
 {
 	GuiColor forecolor,backcolor; 
 
@@ -42,7 +42,7 @@ void gui_draw_window(Win *pWindow)
   *@param :  pWindow 窗口指针
   *@retval: 0 成功 -1 失败
   */
-int8_t gui_add_win(Win *pWindow)
+int8_t gui_add_win(win_config_t *pWindow)
 {
 	gui_draw_window(pWindow);
 	if(winManage.pWin >= GUIWINMANAGE_NUM){
@@ -63,7 +63,7 @@ void gui_window_disp(void)
 	if(winManage.pWin == 0 || winManage.pWin > GUIWINMANAGE_NUM){
 		return;
 	}
-	Win *pThis = winManage.winStack[winManage.pWin - 1];
+	win_config_t *pThis = winManage.winStack[winManage.pWin - 1];
 	pThis->WindowFunction(pThis->param);
 }
 
@@ -85,9 +85,9 @@ void gui_top_win_delete(void)
   *@param:  None
   *@retval: 顶层窗口
   */
-Win *gui_top_win_get(void)
+win_config_t *gui_top_win_get(void)
 {
-	Win *pTopWin = NULL;
+	win_config_t *pTopWin = NULL;
 	
 	if(winManage.pWin >= 1){
 		pTopWin = winManage.winStack[winManage.pWin - 1];

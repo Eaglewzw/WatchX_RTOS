@@ -22,21 +22,29 @@
 #include "lwip/sys.h"
 
 #include "key_fifo.h"
-#include "gui_api.h"
+#include "OLED.h"
+#include "SGUI_Basic.h"
+#include "SGUI_IconResource.h"
+#include "SGUI_Text.h"
+#include "SGUI_FontResource.h"
 
 static EventGroupHandle_t wifi_event_group;
 static const char *TAG = "Test";
 
 
-#define WIFI_CONNECTED_BIT    BIT0   //wifi¡¨Ω”≥…±Í÷æπ¶
-#define WIFI_FAIL_BIT         BIT1   //wifi¡¨Ω” ß∞‹±Í÷æ
-#define WIFI_MODE_SWITCH_BIT  BIT2   // «∑Ò÷«ƒ‹¡™Õ¯ƒ£ Ω
-#define ESPTOUCH_DONE_BIT     BIT3   //÷«ƒ‹≈‰Õ¯ÕÍ≥…
+#define WIFI_CONNECTED_BIT    BIT0   
+#define WIFI_FAIL_BIT         BIT1   
+#define WIFI_AUTO_MODE        BIT2  
+#define WIFI_SMART_MODE       BIT3   
+#define ESPTOUCH_DONE_BIT     BIT4  
 
-#define EXAMPLE_ESP_MAXIMUM_RETRY  5 //◊Ó¥Û≥¢ ‘¥Œ ˝
+#define EXAMPLE_ESP_MAXIMUM_RETRY  5
 
 
-static void smartconfig_task(void * parm);
+//Â±èÂπïËÆæÂ§áÁªìÊûÑ‰ΩìÂÆö‰πâ
+SGUI_SCR_DEV     Device;
+
+
 static void event_handle(void *arg, esp_event_base_t event_base,
                                int32_t event_id, void *event_data);
 static void sc_callback(smartconfig_status_t status, void *pdata);
@@ -49,20 +57,41 @@ void hw_timer_callback(void *arg);
 void app_main(void)
 {
     uint8_t KeyCode=0;
+	SGUI_RECT Area;
+	SGUI_POINT Offest_Point;
+
+	
+	Area.iX = 0;
+	Area.iY = 0;
+	Area.iHeight = 64;
+	Area.iWidth = 128;
+	Offest_Point.iX = 0;
+	Offest_Point.iY = 0;//Âêë‰∏ãÂÅèÁßª
+
     WatchX_System_Init();
     for(; ;) 
     {
-        gui_draw_string(0, 0, "agshdejrktly;u", WHITE);
+        //SGUI_Basic_DrawRectangle(&Device, 15, 15, 20, 20, SGUI_COLOR_FRGCLR, SGUI_COLOR_BKGCLR);
+
+        SGUI_Text_DrawText(&Device, "gpio_set_level", &DEFAULT_ArialMT_Plain_24, &Area, &Offest_Point, SGUI_DRAW_NORMAL);
+		Offest_Point.iY --;
+		if (Offest_Point.iY == -28)
+		{
+			Offest_Point.iY = 0;
+			
+		}
+        OLED_RefreshScreen();
         gpio_set_level(GPIO_NUM_16, 0);
-        vTaskDelay(500/portTICK_RATE_MS);// Õ∑≈CPU◊ ‘¥
+        vTaskDelay(100/portTICK_RATE_MS);
         gpio_set_level(GPIO_NUM_16, 1);
-        vTaskDelay(500/portTICK_RATE_MS);// Õ∑≈CPU◊ ‘¥*/
+        vTaskDelay(100/portTICK_RATE_MS);
         KeyCode = key_fifo_get();
         ESP_LOGI(TAG,"KeyCode:%d \n",KeyCode);
         printf("This is MAIN Task! \n");
         
+        
     }
-    vTaskStartScheduler();//∆Ù∂Ø»ŒŒÒµ˜∂»
+    vTaskStartScheduler();
 
 }
 
@@ -71,78 +100,108 @@ void app_main(void)
 void WatchX_System_Init(void)
 {
 
+
+    SGUI_RECT Logo_Icon_Area;  //ÂºÄÊú∫ÁïåÈù¢ÂõæÊ†áÂå∫Âüü
+	SGUI_POINT Logo_Icon_Offest; //
+
+    int wifi_connect_mode = 0;
     gpio_config_t io_conf;  
     io_conf.intr_type = GPIO_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_OUTPUT;
     io_conf.pin_bit_mask = (1ULL<<GPIO_NUM_16);
     io_conf.pull_down_en = 0;
     io_conf.pull_up_en = 0;
-    gpio_config(&io_conf);           /* ’∂Øƒ£øÈπ‹Ω≈≥ı ºªØ */
+    gpio_config(&io_conf);                                
     gpio_set_level(GPIO_NUM_16, 1);
 
 
-    key_init();                      /* ∞¥º¸≥ı ºªØ */
-    ssd1306_init();                  /* œ‘ æ∆¡«˝∂Ø≥ı ºªØ */
-    gui_windows_init();
-    gui_clear_gram();
+    key_init();                                                             
+    OLED_Initialize();
+   
+	SGUI_SystemIF_MemorySet(&Device, 0x00, sizeof(Device));
+	
+	Device.stSize.iWidth = 128;          // ÂàùÂßãÂåñÊòæÁ§∫Â∞∫ÂØ∏Â§ßÂ∞è 
+	Device.stSize.iHeight = 64;
 
-    ESP_ERROR_CHECK(nvs_flash_init() );  /* ≥ı ºªØ∑«“◊ ß–‘¥Ê¥¢ø‚ (NVS) */
+	Device.fnSetPixel = OLED_SetPixel; 	// Initialize interface object. 
+	Device.fnGetPixel = OLED_GetPixel;
+	Device.fnClear = OLED_ClearDisplay;
+	Device.fnSyncBuffer = OLED_RefreshScreen;
+	
+	Logo_Icon_Area.iX = 0;  
+    Logo_Icon_Area.iY = 0;
+    Logo_Icon_Area.iHeight = 64;
+    Logo_Icon_Area.iWidth = 128;
+	Logo_Icon_Offest.iX = 0;
+	Logo_Icon_Offest.iY = 0;
+  
+    SGUI_Basic_DrawBitMap(&Device, &Logo_Icon_Area, &Logo_Icon_Offest, &LOT_WiFi_LOGO, SGUI_DRAW_NORMAL);//ÊòæÁ§∫ÂºÄÊú∫LogoÂõæÊ†á
+    OLED_RefreshScreen();  //Âà∑Êñ∞Â±èÂπï
+
+    ESP_ERROR_CHECK(nvs_flash_init() );                    
     tcpip_adapter_init();
-    ESP_ERROR_CHECK(esp_event_loop_create_default());/* ¥¥Ω®ƒ¨»œ ¬º˛—≠ª∑ */
-    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();/* ≥ı ºªØWiFi */
+    ESP_ERROR_CHECK(esp_event_loop_create_default());      
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();    
     ESP_ERROR_CHECK( esp_wifi_init(&cfg) );
 
-
-    wifi_event_group = xEventGroupCreate();/* ¥¥Ω® ¬º˛◊È */
-    wifi_config_t wifi_info; /*ªÒ»°¥Ê¥¢µƒWiFi–≈œ¢*/
-    wifi_interface_t wifi_interface=ESP_IF_WIFI_STA;/* ªÒ»°¥Ê¥¢wifiµƒƒ£ Ω,¥À¥¶–Ë“™∏≥÷µ≥ı ºªØ */
-    uint16_t wifi_scan_number=20;/*…®√Ë◊Ó¥Ûap ˝*/
+    ESP_ERROR_CHECK( esp_wifi_start() ); 
+   
+    wifi_event_group = xEventGroupCreate();              
+    wifi_config_t wifi_info;                        
+    wifi_interface_t wifi_interface=ESP_IF_WIFI_STA;      
+    uint16_t wifi_scan_number=20;                        
     uint16_t ap_count = 0;
     wifi_ap_record_t ap_info[20];
+    
     memset(ap_info, 0, sizeof(ap_info));
-
-    esp_wifi_get_config(wifi_interface, &wifi_info);/*ªÒ»°¥Ê¥¢µƒWiFi–≈œ¢*/
-
+    
+    esp_wifi_get_config(wifi_interface, &wifi_info);      
     ESP_LOGI(TAG, "LAST SSID \t\t%s\n", wifi_info.sta.ssid);
     ESP_LOGI(TAG, "LAST PSK  \t\t%s\n", wifi_info.sta.password);
-    //ESP_LOGI(TAG, "LAST MODE \t\t%d\n", wifi_interface);
+    ESP_LOGI(TAG, "LAST MODE \t\t%d\n", wifi_interface);
+    ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) );
+    ESP_ERROR_CHECK( esp_wifi_start() );               
 
-
-    /* Ω´ ¬º˛¥¶¿Ì≥Ã–Ú◊¢≤·µΩœµÕ≥ƒ¨»œ ¬º˛—≠ª∑£¨∑÷± «WiFi ¬º˛∫ÕIPµÿ÷∑ ¬º˛ */
-    ESP_ERROR_CHECK( esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handle, NULL) );
-    ESP_ERROR_CHECK( esp_event_handler_register(IP_EVENT, ESP_EVENT_ANY_ID, &event_handle, NULL) );
-    printf("esp_event_handler_register  \n");
-    ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) ); /* …Ë÷√WiFiµƒπ§◊˜ƒ£ ΩŒ™ STA */
-
-
-    /* ∆Ù∂ØWiFi¡¨Ω” */
-    ESP_ERROR_CHECK( esp_wifi_start() );
-    //ESP_ERROR_CHECK( esp_wifi_connect() );  
+ 
     printf("wifi_init_sta finished. \n");
-    /*»ÙŒ™ ◊¥Œ∆Ù∂Ø£¨wifiµƒssid∫ÕpasswordΩ‘Œ™ø’*/
     printf("wifi scan started \n");
-    if(strlen((const char*)wifi_info.sta.ssid)!=0){
+    
+    ESP_ERROR_CHECK( esp_wifi_scan_start(NULL, true) );
+    ESP_ERROR_CHECK( esp_wifi_scan_get_ap_num(&ap_count) );
+    ESP_ERROR_CHECK( esp_wifi_scan_get_ap_records(&wifi_scan_number, ap_info) );
+    ESP_LOGI(TAG, "ap_count: %d \n", ap_count);
+  
+
+    
+    if ( strlen( (const char*)wifi_info.sta.ssid) != 0 ){
         printf("wifi ssid not null \n");
-        ESP_ERROR_CHECK(esp_wifi_scan_start(NULL, true));
-        ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
-        ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&wifi_scan_number, ap_info));
-        ESP_LOGI(TAG, "ap_count: %d \n", ap_count);
         for (int i = 0; i < ap_count;i++){
             ESP_LOGI(TAG, "scan_wifi: %s\n", ap_info[i].ssid);
-            if( strcmp( (const char*) wifi_info.sta.ssid, (const char*)ap_info[i].ssid) == 0 ){
+            if ( strcmp( (const char*) wifi_info.sta.ssid, (const char*)ap_info[i].ssid) == 0 ){
                 printf("find same wifi name. \n");
                 ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_info) ); 
-                ESP_ERROR_CHECK( esp_wifi_start() );
-                xEventGroupSetBits(wifi_event_group, WIFI_MODE_SWITCH_BIT);
+                ESP_ERROR_CHECK( esp_wifi_connect() );
+                wifi_connect_mode = 1;
                 break;
             }
         }  
     }
 
+    if (wifi_connect_mode){
+        xEventGroupSetBits(wifi_event_group, WIFI_AUTO_MODE);
+    }else{
+        ESP_ERROR_CHECK( esp_smartconfig_set_type(SC_TYPE_ESPTOUCH_AIRKISS) );
+        ESP_ERROR_CHECK( esp_esptouch_set_timeout(250) );
+        ESP_ERROR_CHECK( esp_smartconfig_fast_mode(true) );
+        ESP_ERROR_CHECK( esp_smartconfig_start(sc_callback) );
+        xEventGroupSetBits(wifi_event_group, WIFI_SMART_MODE);
+    }
+  
+    ESP_ERROR_CHECK( esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handle, NULL) );
+    ESP_ERROR_CHECK( esp_event_handler_register(IP_EVENT, ESP_EVENT_ANY_ID, &event_handle, NULL) );
+    printf("esp_event_handler_register  \n");
 
-
-    xTaskCreate(smartconfig_task, "smartconfig_task", 2048, NULL, 10, NULL); 
-
+    
     EventBits_t bits = xEventGroupWaitBits(wifi_event_group,
             WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
             pdFALSE,
@@ -160,13 +219,11 @@ void WatchX_System_Init(void)
     ESP_ERROR_CHECK( esp_event_handler_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handle) );
     ESP_ERROR_CHECK( esp_event_handler_unregister(IP_EVENT, ESP_EVENT_ANY_ID, &event_handle) );
     hw_timer_init(hw_timer_callback, NULL);
-    hw_timer_alarm_us(10000, true);  //√ø∏Ù10msΩ¯––“ª¥Œ∞¥º¸…®√Ë
+    hw_timer_alarm_us(10000, true); 
     printf("WatchX_System_Init finished \n");
+    SGUI_Basic_ClearScreen(&Device);
 
 }
-
-
-
 
 
 static void event_handle(void *arg, esp_event_base_t event_base,
@@ -176,23 +233,24 @@ static void event_handle(void *arg, esp_event_base_t event_base,
     system_event_sta_disconnected_t *event = (system_event_sta_disconnected_t *)event_data;
 
     printf("This is event_handle \n");
-    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
-        ESP_ERROR_CHECK( esp_wifi_connect() );
-        
-    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
-        if (event->reason == WIFI_REASON_BASIC_RATE_NOT_SUPPORT) {
-            /*Switch to 802.11 bgn mode */
-            esp_wifi_set_protocol(ESP_IF_WIFI_STA, WIFI_PROTOCAL_11B | WIFI_PROTOCAL_11G | WIFI_PROTOCAL_11N);
-        }
-        if (retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
-            ESP_ERROR_CHECK( esp_wifi_connect() );
-            retry_num++;
-            ESP_LOGI(TAG, "Wi-Fi disconnected, trying to reconnect... \n");
-        } else {
-            xEventGroupSetBits(wifi_event_group, WIFI_FAIL_BIT);
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
+        EventBits_t isSmartConfig_Bits;
+        isSmartConfig_Bits = xEventGroupWaitBits(wifi_event_group, WIFI_AUTO_MODE | WIFI_SMART_MODE,  pdFALSE, pdFALSE, portMAX_DELAY); 
+        if(isSmartConfig_Bits & WIFI_SMART_MODE) { 
+            if (event->reason == WIFI_REASON_BASIC_RATE_NOT_SUPPORT) {
+                /*Switch to 802.11 bgn mode */
+                esp_wifi_set_protocol(ESP_IF_WIFI_STA, WIFI_PROTOCAL_11B | WIFI_PROTOCAL_11G | WIFI_PROTOCAL_11N);
+            }
+        } else if(isSmartConfig_Bits & WIFI_AUTO_MODE){
+            if (retry_num < EXAMPLE_ESP_MAXIMUM_RETRY) {
+                ESP_ERROR_CHECK( esp_wifi_connect() );
+                retry_num++;
+                ESP_LOGI(TAG, "Wi-Fi disconnected, trying to reconnect... \n");
+            }else{
+                xEventGroupSetBits(wifi_event_group, WIFI_FAIL_BIT);
+            }
         }
         ESP_LOGI(TAG,"connect to the AP fail");
-
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         printf("on_got_ip  \n");
         retry_num = 0;
@@ -203,42 +261,8 @@ static void event_handle(void *arg, esp_event_base_t event_base,
 
 
 
-static void smartconfig_task(void * parm)
-{
-    EventBits_t uxBits;
-    EventBits_t isSmartConfig_Bits;
-
-    isSmartConfig_Bits = xEventGroupWaitBits(wifi_event_group, WIFI_MODE_SWITCH_BIT, false, false, portMAX_DELAY); 
-    if(isSmartConfig_Bits & WIFI_MODE_SWITCH_BIT) { 
-        /*do nothing*/
-    }else
-    {
-        ESP_ERROR_CHECK( esp_smartconfig_set_type(SC_TYPE_ESPTOUCH_AIRKISS) );
-        ESP_ERROR_CHECK( esp_smartconfig_start(sc_callback) );
-    }
-    
-    while(1){
-         /*  ≤ª «µ»¥˝À˘”–∂º“™÷√Œª£¨÷ª“™”–“ª∏ˆ¬˙◊„Ãıº˛æÕ∫√ */
-        uxBits = xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT | ESPTOUCH_DONE_BIT, true, false, portMAX_DELAY); 
-        if(uxBits & WIFI_CONNECTED_BIT) {
-            ESP_LOGI(TAG, "WiFi Connected to ap");
-        }
-        if(uxBits & ESPTOUCH_DONE_BIT) {
-            ESP_LOGI(TAG, "smartconfig over");
-            esp_smartconfig_stop();
-            vTaskSuspend(NULL);
-        }
-    }
-}
 
 
-
-/**
-  * @brief	: ÷«ƒ‹¡¨Ω”µƒªÿµ˜∫Ø ˝ 
-  * @note	: Œﬁ  
-  * @param 	: Œﬁ
-  * @retval	: Œﬁ
-  */
 static void sc_callback(smartconfig_status_t status, void *pdata)
 {
     switch (status) {
@@ -288,15 +312,9 @@ static void sc_callback(smartconfig_status_t status, void *pdata)
 
 void hw_timer_callback(void *arg)
 {
-    //√ø∏Ù10msΩ¯––“ª¥Œ∞¥º¸…®√Ë£¨≤¢Ω´∞¥º¸«Èøˆ–¥»ÎFIFO
-    static int cnt = 0;
-    cnt++;
+
     key_scan();
-    if(cnt==10)
-    {
-        gui_refresh_gram();
-        cnt = 0;
-    }
+
 }
 
 
