@@ -336,7 +336,11 @@ SGUI_SIZE SGUI_Text_GetCharacterData(const SGUI_FONT_RES* pstFontRes, SGUI_UINT3
         {
 			
             //sDataBlockSize = SGUI_USED_BYTE(pstFontRes->iHeight)*(pstFontRes->fnGetWidth(pstFontRes->fnAddress, uiCode));
-			sDataBlockSize = pgm_read_byte( pstFontRes->fnAddress + JUMPTABLE_START + iCharIndex * JUMPTABLE_BYTES + JUMPTABLE_SIZE);  // Size
+			if (pstFontRes == &DEFAULT_GB2312_16X16){
+				sDataBlockSize = 32;
+			}else{
+				sDataBlockSize = pgm_read_byte( pstFontRes->fnAddress + JUMPTABLE_START + iCharIndex * JUMPTABLE_BYTES + JUMPTABLE_SIZE);  // Size
+			}
             sReadDataSize = sDataBlockSize;
 			
             //sGetDataSize = pstFontRes->fnGetData(iCharIndex*sDataBlockSize, pDataBuffer, sReadDataSize>sBufferSize?sBufferSize:sReadDataSize);

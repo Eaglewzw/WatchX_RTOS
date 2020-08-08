@@ -41,8 +41,8 @@ static const char *TAG = "Test";
 #define EXAMPLE_ESP_MAXIMUM_RETRY  5
 
 
-//Â±èÂπïËÆæÂ§áÁªìÊûÑ‰ΩìÂÆö‰πâ
-SGUI_SCR_DEV     Device;
+
+SGUI_SCR_DEV     OLED_Device;//∆¡ƒª…Ë±∏Ω·ππÃÂ∂®“Â
 
 
 static void event_handle(void *arg, esp_event_base_t event_base,
@@ -66,25 +66,26 @@ void app_main(void)
 	Area.iHeight = 64;
 	Area.iWidth = 128;
 	Offest_Point.iX = 0;
-	Offest_Point.iY = 0;//Âêë‰∏ãÂÅèÁßª
+	Offest_Point.iY = 0;//œÚœ¬∆´“∆
 
     WatchX_System_Init();
     for(; ;) 
     {
-        //SGUI_Basic_DrawRectangle(&Device, 15, 15, 20, 20, SGUI_COLOR_FRGCLR, SGUI_COLOR_BKGCLR);
 
-        SGUI_Text_DrawText(&Device, "gpio_set_level", &DEFAULT_ArialMT_Plain_24, &Area, &Offest_Point, SGUI_DRAW_NORMAL);
-		Offest_Point.iY --;
-		if (Offest_Point.iY == -28)
-		{
-			Offest_Point.iY = 0;
-			
-		}
+        //SGUI_Text_DrawText(&OLED_Device, "LOVE U U", &DEFAULT_ArialMT_Plain_24, &Area, &Offest_Point, SGUI_DRAW_NORMAL);
+        //Area.iY = 30;
+        SGUI_Text_DrawText(&OLED_Device, "Õı’—Œ‰", &DEFAULT_GB2312_16X16, &Area, &Offest_Point, SGUI_DRAW_NORMAL);
+        Offest_Point.iY --;
+        if (Offest_Point.iY == -28)
+        {
+            Offest_Point.iY = 0;
+
+        }
         OLED_RefreshScreen();
         gpio_set_level(GPIO_NUM_16, 0);
-        vTaskDelay(100/portTICK_RATE_MS);
+        vTaskDelay(100 / portTICK_RATE_MS);
         gpio_set_level(GPIO_NUM_16, 1);
-        vTaskDelay(100/portTICK_RATE_MS);
+        vTaskDelay(100 / portTICK_RATE_MS);
         KeyCode = key_fifo_get();
         ESP_LOGI(TAG,"KeyCode:%d \n",KeyCode);
         printf("This is MAIN Task! \n");
@@ -100,8 +101,8 @@ void app_main(void)
 void WatchX_System_Init(void)
 {
 
-
-    SGUI_RECT Logo_Icon_Area;  //ÂºÄÊú∫ÁïåÈù¢ÂõæÊ†áÂå∫Âüü
+    uint8_t i = 0, j = 0;
+    SGUI_RECT Logo_Icon_Area;  //ø™ª˙ΩÁ√ÊÕº±Í«¯”Ú
 	SGUI_POINT Logo_Icon_Offest; //
 
     int wifi_connect_mode = 0;
@@ -118,15 +119,16 @@ void WatchX_System_Init(void)
     key_init();                                                             
     OLED_Initialize();
    
-	SGUI_SystemIF_MemorySet(&Device, 0x00, sizeof(Device));
+	SGUI_SystemIF_MemorySet(&OLED_Device, 0x00, sizeof(OLED_Device));
 	
-	Device.stSize.iWidth = 128;          // ÂàùÂßãÂåñÊòæÁ§∫Â∞∫ÂØ∏Â§ßÂ∞è 
-	Device.stSize.iHeight = 64;
+    // ≥ı ºªØœ‘ æ∆¡≥ﬂ¥Á¥Û–°
+	OLED_Device.stSize.iWidth = 128;           
+	OLED_Device.stSize.iHeight = 64;
 
-	Device.fnSetPixel = OLED_SetPixel; 	// Initialize interface object. 
-	Device.fnGetPixel = OLED_GetPixel;
-	Device.fnClear = OLED_ClearDisplay;
-	Device.fnSyncBuffer = OLED_RefreshScreen;
+	OLED_Device.fnSetPixel = OLED_SetPixel; 	// Initialize interface object. 
+	OLED_Device.fnGetPixel = OLED_GetPixel;
+	OLED_Device.fnClear = OLED_ClearDisplay;
+	OLED_Device.fnSyncBuffer = OLED_RefreshScreen;
 	
 	Logo_Icon_Area.iX = 0;  
     Logo_Icon_Area.iY = 0;
@@ -135,8 +137,20 @@ void WatchX_System_Init(void)
 	Logo_Icon_Offest.iX = 0;
 	Logo_Icon_Offest.iY = 0;
   
-    SGUI_Basic_DrawBitMap(&Device, &Logo_Icon_Area, &Logo_Icon_Offest, &LOT_WiFi_LOGO, SGUI_DRAW_NORMAL);//ÊòæÁ§∫ÂºÄÊú∫LogoÂõæÊ†á
-    OLED_RefreshScreen();  //Âà∑Êñ∞Â±èÂπï
+    SGUI_Basic_DrawBitMap(&OLED_Device, &Logo_Icon_Area, &Logo_Icon_Offest, &LOT_WiFi_LOGO, SGUI_DRAW_NORMAL);//œ‘ æø™ª˙LogoÕº±Í
+    //À¢–¬∆¡ƒª
+    OLED_RefreshScreen(); 
+
+    //—”≥Ÿ“ª∂Œ ±º‰
+    for (j=0; j<2; j++)
+    {
+        for (i=0; i<200; i++)
+        {
+            os_delay_us(50000);//5ms
+        }
+    }
+    SGUI_Basic_ClearScreen(&OLED_Device);
+
 
     ESP_ERROR_CHECK(nvs_flash_init() );                    
     tcpip_adapter_init();
@@ -175,7 +189,7 @@ void WatchX_System_Init(void)
     
     if ( strlen( (const char*)wifi_info.sta.ssid) != 0 ){
         printf("wifi ssid not null \n");
-        for (int i = 0; i < ap_count;i++){
+        for (int i=0; i<ap_count; i++){
             ESP_LOGI(TAG, "scan_wifi: %s\n", ap_info[i].ssid);
             if ( strcmp( (const char*) wifi_info.sta.ssid, (const char*)ap_info[i].ssid) == 0 ){
                 printf("find same wifi name. \n");
@@ -221,7 +235,7 @@ void WatchX_System_Init(void)
     hw_timer_init(hw_timer_callback, NULL);
     hw_timer_alarm_us(10000, true); 
     printf("WatchX_System_Init finished \n");
-    SGUI_Basic_ClearScreen(&Device);
+    SGUI_Basic_ClearScreen(&OLED_Device);
 
 }
 

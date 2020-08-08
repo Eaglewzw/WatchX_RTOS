@@ -27,4 +27,10 @@ extern const SGUI_FONT_RES  DEFAULT_ArialMT_Plain_10;
 extern const SGUI_FONT_RES 	DEFAULT_ArialMT_Plain_16;
 extern const SGUI_FONT_RES 	DEFAULT_ArialMT_Plain_24;
 
+
+/************************************************************************/
+//=                      中文字库定义                                   =//
+/************************************************************************/
+extern const SGUI_FONT_RES 	DEFAULT_GB2312_16X16;
+
 #endif // _INCLUDED_SGUI_FONT_SOURCE_H_

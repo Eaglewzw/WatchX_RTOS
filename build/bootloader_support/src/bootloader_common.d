@@ -1,117 +1,117 @@
 src/bootloader_common.o: \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/src/bootloader_common.c \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/include/sdkconfig.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdint.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_default_types.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/features.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_intsup.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/hal.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_common/include/esp_err.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdio.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/newlib.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/config.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/ieeefp.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/config/core-isa.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/cdefs.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/reent.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_types.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_types.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/lock.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/types.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/types.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/sched.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/stdio.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/assert.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/ets_sys.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/soc.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log_internal.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/crc.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/esp_crc.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/gpio.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/pin_mux_register.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include_priv/bootloader_config.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/bootloader_common.h \
- H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/src/bootloader_common.c \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/include/sdkconfig.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdint.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_default_types.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/features.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_intsup.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/hal.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_common/include/esp_err.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdio.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/newlib.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/config.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/ieeefp.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/config/core-isa.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/cdefs.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/reent.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_types.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_types.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/lock.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/types.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/types.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/sched.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/stdio.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/assert.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/ets_sys.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/soc.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log_internal.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/crc.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/esp_crc.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/gpio.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/pin_mux_register.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include_priv/bootloader_config.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/bootloader_common.h \
+ G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/include/sdkconfig.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/build/include/sdkconfig.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdint.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdint.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_default_types.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_default_types.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/features.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/features.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_intsup.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_intsup.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/hal.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/hal.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_common/include/esp_err.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp_common/include/esp_err.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdio.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/stdio.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/newlib.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/newlib.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/config.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/config.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/ieeefp.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/ieeefp.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/config/core-isa.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/xtensa/config/core-isa.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/cdefs.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/cdefs.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/reent.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/reent.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/_ansi.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_types.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/_types.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_types.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/_types.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/lock.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/lock.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/types.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/types.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/types.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/machine/types.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/sched.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/sched.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/stdio.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/sys/stdio.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/assert.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/newlib/newlib/include/assert.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/ets_sys.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/ets_sys.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/soc.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/driver/soc.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log_internal.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/log/include/esp_log_internal.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/crc.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/crc.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/esp_crc.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/util/include/esp_crc.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/gpio.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/rom/gpio.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/pin_mux_register.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/pin_mux_register.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/esp8266/include/esp8266/eagle_soc.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include_priv/bootloader_config.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include_priv/bootloader_config.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/bootloader_common.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/bootloader_common.h:
 
-H:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h:
+G:/Espressif/msys32/home/Administrator/WatchX_RTOS/components/bootloader_support/include/esp_flash_data_types.h:
 /home/Administrator/WatchX_RTOS/components/bootloader_support/src/bootloader_common.c:
